@@ -27,7 +27,8 @@ fi
 
 if [ $ENABLE_GIT_UPDATE ]
 then
-    if [ ! -f "/app/initialrun.txt" ]
+    cd /app
+    if [ ! -d "/app/dockermon-app/.git" ]
     then
         git clone https://github.com/drumfreak/dockermon-app.git
     fi
