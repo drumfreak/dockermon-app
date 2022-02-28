@@ -1706,14 +1706,5 @@
   "../node_modules/react-syntax-highlighter/dist/esm/prism-async.js -> refractor": {
     "id": 98695,
     "files": []
-  },
-  "containers/create.jsx -> components/containers/container-create": {
-    "id": 28117,
-    "files": [
-      "static/chunks/3978-ddbab2934421bd88.js",
-      "static/chunks/1546.16230976f24a307a.js",
-      "static/chunks/9861-84de8f5ad2840872.js",
-      "static/chunks/8117.fc1b93764b24457b.js"
-    ]
   }
 }

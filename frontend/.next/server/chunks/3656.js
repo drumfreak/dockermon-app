@@ -1019,16 +1019,16 @@ const ContainerProfilerNetworkLineChart = /*#__PURE__*/ (0,react__WEBPACK_IMPORT
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var chartjs_adapter_date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(104);
 /* harmony import */ var chartjs_adapter_date_fns__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(chartjs_adapter_date_fns__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7051);
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var helpers_stats_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9318);
+/* harmony import */ var helpers_stats_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9318);
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7051);
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_chartjs_2__WEBPACK_IMPORTED_MODULE_5__);
 
 /* eslint-disable react/display-name */ 
 
 
 
 
-chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_2__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.TimeScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.Filler, chart_js__WEBPACK_IMPORTED_MODULE_2__.Title, chart_js__WEBPACK_IMPORTED_MODULE_2__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_2__.Legend);
+chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_2__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.TimeScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.Filler, chart_js__WEBPACK_IMPORTED_MODULE_2__.Title, chart_js__WEBPACK_IMPORTED_MODULE_2__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_2__.Legend);
 
 const ContainerProfilerProcessesBarChart = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)((props1, ref2)=>{
     const { 0: options , 1: setOptions  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
@@ -1069,11 +1069,11 @@ const ContainerProfilerProcessesBarChart = /*#__PURE__*/ (0,react__WEBPACK_IMPOR
     const processData = async ()=>{
         // console.log('Process Data');
         const basicData = {
-            labels: helpers_stats_helper__WEBPACK_IMPORTED_MODULE_5__/* .statsHelper.reduceStats */ .Q.reduceStats(props1.statsDates),
+            labels: helpers_stats_helper__WEBPACK_IMPORTED_MODULE_4__/* .statsHelper.reduceStats */ .Q.reduceStats(props1.statsDates),
             datasets: [
                 {
                     label: 'Processes',
-                    data: helpers_stats_helper__WEBPACK_IMPORTED_MODULE_5__/* .statsHelper.reduceStats */ .Q.reduceStats(props1.statsProcesses) || [],
+                    data: helpers_stats_helper__WEBPACK_IMPORTED_MODULE_4__/* .statsHelper.reduceStats */ .Q.reduceStats(props1.statsProcesses) || [],
                     backgroundColor: props1.chartColor || 'green',
                     color: '#cc0000',
                     hoverBackgroundColor: '#3380FF',
@@ -1146,7 +1146,7 @@ const ContainerProfilerProcessesBarChart = /*#__PURE__*/ (0,react__WEBPACK_IMPOR
                 className: "chart-foreground2",
                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "chart-foreground",
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__.Bar, {
+                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_chartjs_2__WEBPACK_IMPORTED_MODULE_5__.Bar, {
                         className: "chart-foreground",
                         ref: chartRef,
                         width: 100,

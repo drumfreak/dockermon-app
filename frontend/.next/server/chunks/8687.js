@@ -1369,6 +1369,13 @@ function Nav() {
                     }
                 },
                 {
+                    label: 'Profilings',
+                    icon: 'pi pi-fw pi-chart-line',
+                    command: ()=>{
+                        router.push('/profilings');
+                    }
+                },
+                {
                     label: 'Create',
                     icon: 'pi pi-fw pi-plus',
                     command: ()=>{
@@ -1445,38 +1452,44 @@ function Nav() {
             ]
         },
         {
-            label: 'Hosts',
-            icon: 'pi pi-fw pi-globe',
+            label: 'System',
+            icon: 'pi pi-fw pi-desktop',
             items: [
                 {
-                    label: 'View',
+                    label: 'Activity',
                     icon: 'pi pi-fw pi-list',
                     command: ()=>{
-                        router.push('/hosts');
+                        router.push('/activity');
                     }
                 },
                 {
-                    label: 'Join',
-                    icon: 'pi pi-fw pi-plus',
+                    label: 'State',
+                    icon: 'pi pi-fw pi-file',
                     command: ()=>{
-                        router.push('/hosts/create');
+                        router.push('/state');
                     }
+                },
+                {
+                    label: 'Hosts',
+                    icon: 'pi pi-fw pi-globe',
+                    items: [
+                        {
+                            label: 'View',
+                            icon: 'pi pi-fw pi-list',
+                            command: ()=>{
+                                router.push('/hosts');
+                            }
+                        },
+                        {
+                            label: 'Join',
+                            icon: 'pi pi-fw pi-plus',
+                            command: ()=>{
+                                router.push('/hosts/create');
+                            }
+                        }, 
+                    ]
                 }, 
             ]
-        },
-        {
-            label: 'Profilings',
-            icon: 'pi pi-fw pi-chart-line',
-            command: ()=>{
-                router.push('/profilings');
-            }
-        },
-        {
-            label: 'State',
-            icon: 'pi pi-fw pi-chart-line',
-            command: ()=>{
-                router.push('/state');
-            }
         }, 
     ];
     return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
@@ -1514,14 +1527,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var store_actions_images_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8601);
 /* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2222);
 /* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(primereact_dialog__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(727);
-/* harmony import */ var react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4794);
-/* harmony import */ var react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var store_actions_volumes_actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9678);
 /* harmony import */ var store_actions_networks_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1457);
 /* harmony import */ var store_actions_hosts_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6878);
 /* harmony import */ var store_actions_site_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5945);
+/* harmony import */ var react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(727);
+/* harmony import */ var react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4794);
+/* harmony import */ var react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_syntax_highlighter_dist_cjs_styles_prism__WEBPACK_IMPORTED_MODULE_7__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_services_docker_events_service__WEBPACK_IMPORTED_MODULE_2__]);
 _services_docker_events_service__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -1911,7 +1924,7 @@ function State() {
                         }
                         break;
                     case 'delete':
-                        await dispatch((0,store_actions_images_actions__WEBPACK_IMPORTED_MODULE_13__/* .resetImages */ .Si)({}, activeHostRef.current.id));
+                        // await dispatch(resetImages({}, activeHostRef.current.id));
                         await loadImages(activeHostRef.current.id);
                         if (toast === null || toast === void 0 ? void 0 : toast.current) {
                             setTimeout(()=>{
@@ -3121,9 +3134,6 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-// import 'styles/layout/css/layout-dark.css';
-// import 'styles/custom/dark/theme.css';
-// import 'styles/custom/dark/custom.css';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_app_redux__WEBPACK_IMPORTED_MODULE_8__.withRedux)(Layout));
 function Layout({ children  }) {
@@ -3480,10 +3490,10 @@ function setActiveHost(payload) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "mN": () => (/* binding */ addImage),
 /* harmony export */   "CM": () => (/* binding */ removeImage),
-/* harmony export */   "Si": () => (/* binding */ resetImages),
 /* harmony export */   "wr": () => (/* binding */ replaceImages),
 /* harmony export */   "Dl": () => (/* binding */ fullReplaceImages)
 /* harmony export */ });
+/* unused harmony export resetImages */
 function addImage(payload) {
     return function(dispatch) {
         dispatch({

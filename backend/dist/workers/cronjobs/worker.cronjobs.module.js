@@ -37,8 +37,8 @@ const docker_hosts_module_1 = require("../../docker-hosts/docker-hosts.module");
 const stats_util_1 = require("../../utility/stats.util");
 const stats_service_1 = require("../../stats/stats.service");
 const activity_logs_entity_1 = require("../../activity-logs/activity-logs.entity");
-const typeORMLogging = process.env.TYPEORM_LOGGING === 'false' ? false : true;
-const typeORMMigrations = process.env.TYPEORM_MIGRATIONS === 'false' ? false : true;
+const typeORMLogging = process.env.TYPEORM_LOGGING === 'false' ? false : false;
+const typeORMMigrations = process.env.TYPEORM_MIGRATIONS === 'false' ? false : false;
 let WorkerCronjobsModule = class WorkerCronjobsModule {
     onModuleInit() {
         console.log('------------->>>  Cronjobs WORKER: ', process.pid);

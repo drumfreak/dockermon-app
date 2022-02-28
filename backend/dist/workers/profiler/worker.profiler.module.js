@@ -34,8 +34,8 @@ const docker_hosts_entity_1 = require("../../docker-hosts/docker-hosts.entity");
 const stats_util_1 = require("../../utility/stats.util");
 const stats_service_1 = require("../../stats/stats.service");
 const activity_logs_entity_1 = require("../../activity-logs/activity-logs.entity");
-const typeORMLogging = process.env.TYPEORM_LOGGING === 'false' ? false : true;
-const typeORMMigrations = process.env.TYPEORM_MIGRATIONS === 'false' ? false : true;
+const typeORMLogging = process.env.TYPEORM_LOGGING === 'false' ? false : false;
+const typeORMMigrations = process.env.TYPEORM_MIGRATIONS === 'false' ? false : false;
 let WorkerProfilerModule = class WorkerProfilerModule {
     onModuleInit() {
         console.log('------------->>>  WORKER: ', process.pid);

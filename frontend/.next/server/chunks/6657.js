@@ -314,7 +314,7 @@ const defaults = {
             showCpu: true,
             showOffline: true,
             showOverlays: true,
-            overlayDelay: 1100
+            overlayDelay: 900
         },
         theme: {
             main: 'custom'
@@ -336,7 +336,7 @@ const defaults = {
             networkTx: 'd0ff00',
             processes: '4c00d9',
             background: '01050a',
-            hoverOffset: 3.8,
+            hoverOffset: 4,
             lineTension: 0.1,
             memoryUsage: '00690b',
             pointRadius: 0,
