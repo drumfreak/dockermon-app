@@ -1,0 +1,30 @@
+import { ActivityLog } from 'src/activity-logs/activity-logs.entity';
+export declare class Profiling {
+    id: number;
+    containerDockerId: string;
+    containerId: number;
+    name: string;
+    data: any;
+    containerSnapshot: any;
+    containerSnapshotAfter: any;
+    statsDates: any;
+    statsCpu: any;
+    statsMemoryPercent: any;
+    statsDiskRead: any;
+    statsDiskWrite: any;
+    statsNetworkTx: any;
+    statsNetworkRx: any;
+    statsProcesses: any;
+    statsSummary: any;
+    chartData: any;
+    dates: any;
+    jobData: any;
+    samples: number;
+    notes: string;
+    startDate: Date;
+    endDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    deleted: Date;
+    activityLogs: ActivityLog[];
+}

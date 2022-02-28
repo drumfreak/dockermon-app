@@ -1,0 +1,33 @@
+import { ActivityLog } from 'src/activity-logs/activity-logs.entity';
+import { Container } from 'src/containers/container.entity';
+import { DockerImage } from 'src/docker-images/docker-images.entity';
+import { DockerNetwork } from 'src/docker-networks/docker-networks.entity';
+import { DockerVolume } from 'src/docker-volumes/docker-volumes.entity';
+export declare class DockerHost {
+    id: number;
+    hostId: string;
+    name: string;
+    ipAddress: string;
+    port: number;
+    connectionType: string;
+    architecture: string;
+    hostname: string;
+    details: any;
+    usageData: any;
+    containerCount: number;
+    active: boolean;
+    dockerVersion: string;
+    os: string;
+    status: string;
+    error: string;
+    comment: string;
+    createdDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    deleted: Date;
+    containers: Container[];
+    volumes: DockerVolume[];
+    images: DockerImage[];
+    networks: DockerNetwork[];
+    activityLogs: ActivityLog[];
+}

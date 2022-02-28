@@ -1,0 +1,38 @@
+import { ActivityLog } from 'src/activity-logs/activity-logs.entity';
+import { Container } from 'src/containers/container.entity';
+import { DockerHost } from 'src/docker-hosts/docker-hosts.entity';
+export declare class DockerImage {
+    id: number;
+    imageId: string;
+    name: string;
+    tag: string;
+    pullTag: string;
+    parentImage: string;
+    containerId: number;
+    containerDockerId: string;
+    architecture: string;
+    hostname: string;
+    dockerImage: string;
+    details: any;
+    repoTags: any;
+    labels: any;
+    usageData: any;
+    containerCount: number;
+    fileSize: number;
+    virtualSize: number;
+    sharedSize: number;
+    active: boolean;
+    dockerVersion: string;
+    os: string;
+    status: string;
+    error: string;
+    author: string;
+    comment: string;
+    createdDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    deleted: Date;
+    host: DockerHost;
+    containers: Container[];
+    activityLogs: ActivityLog[];
+}
