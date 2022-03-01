@@ -144,7 +144,7 @@ function login(username, password) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('tokenExpires', result.tokenExpires);
                 localStorage.setItem('userId', result.user.id);
-                userSubject.next(result.user);
+                userSubject.next(result.user.id);
             } else {
                 throw Error('Invalid token');
             }
@@ -160,7 +160,9 @@ function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpires');
     userSubject.next(null);
+    // setTimeout(() => {
     next_router__WEBPACK_IMPORTED_MODULE_2___default().push('/auth/login');
+// }, 0);
 }
 
 

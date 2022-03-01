@@ -3138,15 +3138,38 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_app_redux__WEBPACK_IMPORTED_MODULE_8__.withRedux)(Layout));
 function Layout({ children  }) {
     const { 0: authorized , 1: setAuthorized  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+    const { 0: transitioning , 1: setTransitioning  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+    // const [userId, setUserId] = useState(null);
     const router1 = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     const { 0: mainClass , 1: setMainClass  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)('layout-content main-fade');
     const mainClassRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(mainClass);
     mainClassRef.current = mainClass;
     (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        _services_auth_service__WEBPACK_IMPORTED_MODULE_4__/* .authService.user.subscribe */ .O.user.subscribe((x)=>{
+            if (x > 0) {
+                // console.log('login userId', x);
+                // setUserId(x);
+                setAuthorized(true);
+            } else {
+                setAuthorized(false);
+            }
+        });
+    // return () => subscription.unsubscribe();
+    }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         // run auth check on initial load
         authCheck(router1.asPath);
+        _services_auth_service__WEBPACK_IMPORTED_MODULE_4__/* .authService.user.subscribe */ .O.user.subscribe((x)=>{
+            if (x > 0) {
+                // console.log('login userId', x);
+                // setUserId(x);
+                setAuthorized(true);
+            } else {
+                setAuthorized(false);
+            }
+        });
         // set authorized to false to hide page content while changing routes
-        const hideContent = ()=>setAuthorized(false)
+        const hideContent = ()=>setTransitioning(true)
         ;
         const fadeIn = ()=>{
             setTimeout(()=>{
@@ -3156,7 +3179,7 @@ function Layout({ children  }) {
                     // console.log('fadeIn');
                     }
                 }
-            }, 4);
+            }, 0);
         };
         // const fadeOut = () => {
         //   // console.log('mainClass', mainClass);
@@ -3166,6 +3189,7 @@ function Layout({ children  }) {
         //   }
         // };
         const completeRoute = (router)=>{
+            setTransitioning(false);
             authCheck(router);
             fadeIn();
         };
@@ -3187,19 +3211,28 @@ function Layout({ children  }) {
         ];
         const path = url.split('?')[0];
         if (!_services_auth_service__WEBPACK_IMPORTED_MODULE_4__/* .authService.userValue */ .O.userValue && !publicPaths.includes(path)) {
-            setAuthorized(false);
-            router1.push({
-                pathname: '/auth/login',
-                query: {
-                    returnUrl: router1.asPath
-                }
-            });
+            // console.log('Setting user to false');
+            // setAuthorized(false);
+            if (path !== '/auth/login') {
+                setAuthorized(false);
+                router1.push({
+                    pathname: '/auth/login',
+                    query: {
+                        returnUrl: router1.asPath
+                    }
+                });
+            }
         } else {
             // TODO: Look into this..
-            setAuthorized(true);
+            if (_services_auth_service__WEBPACK_IMPORTED_MODULE_4__/* .authService.userId */ .O.userId > 0) {
+                // console.log('UID', authService.userId);
+                // console.log('AuthService', authService.user);
+                setAuthorized(true);
+            }
             return;
         }
     }
+    // console.log('Authorized', authorized);
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
@@ -3208,37 +3241,48 @@ function Layout({ children  }) {
                 })
             }),
             authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_State__WEBPACK_IMPORTED_MODULE_10__/* .State */ .Z, {}),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                 style: {
                     width: '100%',
                     height: '100%'
                 },
-                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "layout-wrapper layout-menu-dark layout-topbar-blue layout-menu-static layout-menu-active",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Header__WEBPACK_IMPORTED_MODULE_5__/* .Header */ .h, {}),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_scrolltop__WEBPACK_IMPORTED_MODULE_11__.ScrollTop, {}),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_7__/* .LeftMenu */ .s, {}),
-                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                            className: "layout-main",
-                            children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "col-12 ml-0 mr-0 p-0",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Nav__WEBPACK_IMPORTED_MODULE_6__/* .Nav */ .J, {})
-                                }),
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: mainClass,
-                                    children: [
-                                        !authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_Spinner__WEBPACK_IMPORTED_MODULE_9__/* .Spinner */ .$, {}),
-                                        authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                            children: children
-                                        })
-                                    ]
-                                })
-                            ]
+                children: [
+                    authorized && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "layout-wrapper layout-menu-dark layout-topbar-blue layout-menu-static layout-menu-active",
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Header__WEBPACK_IMPORTED_MODULE_5__/* .Header */ .h, {}),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_scrolltop__WEBPACK_IMPORTED_MODULE_11__.ScrollTop, {}),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_LeftMenu__WEBPACK_IMPORTED_MODULE_7__/* .LeftMenu */ .s, {}),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "layout-main",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        className: "col-12 ml-0 mr-0 p-0",
+                                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Nav__WEBPACK_IMPORTED_MODULE_6__/* .Nav */ .J, {})
+                                    }),
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                        className: mainClass,
+                                        children: [
+                                            !authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_Spinner__WEBPACK_IMPORTED_MODULE_9__/* .Spinner */ .$, {}),
+                                            authorized && !transitioning && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                                children: children
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    !authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "col-12",
+                        children: !authorized && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            className: "login-wrapper",
+                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                children: children
+                            })
                         })
-                    ]
-                })
+                    })
+                ]
             })
         ]
     }));
