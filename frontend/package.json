@@ -2,9 +2,9 @@
   "name": "react-frontend",
   "private": true,
   "scripts": {
-    "dev": "npx next dev",
+    "dev": "npx next dev -p 3000",
     "build": "npx next build",
-    "start": "npx next start",
+    "start": "npx next start -p 3800",
     "lint": "next lint",
     "docker:build": "docker-compose -p dockermon -f docker-compose.yml up --build",
     "docker": "docker-compose -p dockermon -f docker-compose.yml up",
@@ -20,10 +20,8 @@
     "chart.js": "^3.7.0",
     "chartjs-adapter-date-fns": "^2.0.0",
     "chartjs-plugin-datalabels": "^2.0.0",
-    "date-fn": "0.0.2",
     "date-fns": "^2.28.0",
     "dayjs": "^1.10.7",
-    "eslint-config-prettier": "^8.3.0",
     "next": "^12.0.9",
     "primeflex": "^3.1.2",
     "primeicons": "^5.0.0",
@@ -56,7 +54,7 @@
     "eslint-config-next": "12.0.9",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
-    "sass": "^1.49.8"
+    "eslint-config-prettier": "^8.3.0"
   },
   "lint-staged": {
     "*.jsx": "eslint --cache --fix"
