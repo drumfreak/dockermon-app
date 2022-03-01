@@ -4,7 +4,7 @@
 
 #
 
-Dockermon App Code is the repository that keeps the containers running [Dockermon](https://github.com/drumfreak/dockermon) up to date when they have the ENABLE_GIT_UPDATES environment variable set to 1.
+Dockermon App Code is the repository that keeps the containers running [Dockermon](https://github.com/drumfreak/dockermon) up to date when they have the `ENABLE_GIT_UPDATES=1` environment variable set.
 
 When a container launches and has connection to the internet, a git pull will be achieved from this branch to keep the containers up to date. This is a basic system, when the source code is built for production and passes all tests it gets synced to here.
 
