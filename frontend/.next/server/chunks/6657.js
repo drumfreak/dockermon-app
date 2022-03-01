@@ -314,7 +314,7 @@ const defaults = {
             showCpu: true,
             showOffline: true,
             showOverlays: true,
-            overlayDelay: 900
+            overlayDelay: 1100
         },
         theme: {
             main: 'custom'
