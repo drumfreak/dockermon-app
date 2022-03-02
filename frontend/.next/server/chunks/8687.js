@@ -818,6 +818,7 @@ function LeftMenuOptions() {
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_panel__WEBPACK_IMPORTED_MODULE_8__.Panel, {
                             header: "Left Menu Settings",
                             className: "col-12 p-0 leftMenu-panel",
+                            collapsed: false,
                             toggleable: true,
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                 className: "col-12 mr-0 pr-0 p-0",
@@ -955,6 +956,7 @@ function LeftMenuOptions() {
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_panel__WEBPACK_IMPORTED_MODULE_8__.Panel, {
                             header: "Chart Colors",
                             className: "m-0 p-0 leftMenu-panel",
+                            collapsed: true,
                             toggleable: true,
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                 className: "col-12 m-0 p-0 grid",
@@ -1343,6 +1345,7 @@ function Nav() {
     if (!user) return null;
     const confirm = ()=>{
         (0,primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_6__.confirmDialog)({
+            className: 'confirm-dialogs',
             message: 'Are you sure you want to logout?',
             header: 'Confirmation',
             icon: 'pi pi-exclamation-triangle',
@@ -2515,11 +2518,11 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var primereact_progressbar__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(primereact_progressbar__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var helpers_stats_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9318);
 /* harmony import */ var services_socket_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1515);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(715);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var primereact_menubar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4130);
-/* harmony import */ var primereact_menubar__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(primereact_menubar__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var components_ContainerStatusBadge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(6374);
+/* harmony import */ var primereact_menubar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4130);
+/* harmony import */ var primereact_menubar__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(primereact_menubar__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var components_ContainerStatusBadge__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6374);
+/* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4179);
+/* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_10__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([services_socket_service__WEBPACK_IMPORTED_MODULE_7__]);
 services_socket_service__WEBPACK_IMPORTED_MODULE_7__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -2696,7 +2699,8 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
     };
     const confirm = (action, title, target = null)=>{
         var ref;
-        (0,primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__.confirmPopup)({
+        (0,primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_10__.confirmDialog)({
+            className: 'confirm-dialogs',
             message: title,
             target: ((ref = target.originalEvent) === null || ref === void 0 ? void 0 : ref.currentTarget) ? target.originalEvent.currentTarget : null,
             header: 'Confirmation',
@@ -2893,7 +2897,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                         className: "col-1 text-right",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_ContainerStatusBadge__WEBPACK_IMPORTED_MODULE_10__/* .ContainerStatusBadge */ .Q, {
+                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_ContainerStatusBadge__WEBPACK_IMPORTED_MODULE_9__/* .ContainerStatusBadge */ .Q, {
                                                 className: "mb-2 mt-0 pt-0",
                                                 status: container1.state
                                             })
@@ -2903,7 +2907,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: "col-12 p-0 mt-0 mb-3 pr-0 pl-0",
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_menubar__WEBPACK_IMPORTED_MODULE_9__.Menubar, {
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_menubar__WEBPACK_IMPORTED_MODULE_8__.Menubar, {
                                     className: "col-12 mb-0 ml-0 mr-0 justify-content-center container-overlay-menu",
                                     model: menuItems1
                                 })

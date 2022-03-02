@@ -26,8 +26,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var services_activity_logs_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1961);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1635);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(715);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4179);
+/* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1088);
 /* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(primereact_button__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7197);
@@ -344,7 +344,8 @@ function ActivityLogIndex(props) {
         });
     };
     const confirm = (action, activityLog, title, target = null)=>{
-        (0,primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_9__.confirmPopup)({
+        (0,primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_9__.confirmDialog)({
+            className: 'confirm-dialogs',
             message: title,
             target: (target === null || target === void 0 ? void 0 : target.currentTarget) ? target.currentTarget : null,
             header: 'Confirmation',

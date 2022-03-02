@@ -49,29 +49,26 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4179);
 /* harmony import */ var primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(715);
-/* harmony import */ var primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6085);
-/* harmony import */ var primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1088);
-/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(primereact_button__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1267);
-/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(primereact_ripple__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1404);
-/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(primereact_dropdown__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var primereact_inputtext__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9093);
-/* harmony import */ var primereact_inputtext__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(primereact_inputtext__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var primereact_toast__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(333);
-/* harmony import */ var primereact_toast__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(primereact_toast__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(8145);
-/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(primereact_column__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(6895);
-/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var primereact_treetable__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(1249);
-/* harmony import */ var primereact_treetable__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(primereact_treetable__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6085);
+/* harmony import */ var primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1088);
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(primereact_button__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1267);
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(primereact_ripple__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1404);
+/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(primereact_dropdown__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(9093);
+/* harmony import */ var primereact_inputtext__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var primereact_toast__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(333);
+/* harmony import */ var primereact_toast__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(primereact_toast__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8145);
+/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(primereact_column__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(6895);
+/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(primereact_paginator__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var primereact_treetable__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(1249);
+/* harmony import */ var primereact_treetable__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(primereact_treetable__WEBPACK_IMPORTED_MODULE_16__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_services_socket_service__WEBPACK_IMPORTED_MODULE_4__]);
 _services_socket_service__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
 
 
 
@@ -325,7 +322,7 @@ function DockerImageTags(props) {
         return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                 className: "col-12 ml-2 mr-2",
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_9__.InputTextarea, {
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtextarea__WEBPACK_IMPORTED_MODULE_8__.InputTextarea, {
                     ref: messagesEndRef,
                     autoCorrect: "off",
                     spellCheck: "false",
@@ -442,7 +439,7 @@ function DockerImageTags(props) {
         if (f.length > 0) {
             return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_9__.Button, {
                         label: "Remove",
                         onClick: (e)=>{
                             confirm('removeImage', f[0], 'Remove ' + f[0].pullTag + '?', e);
@@ -455,7 +452,7 @@ function DockerImageTags(props) {
             }));
         } else {
             return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_9__.Button, {
                     label: "Pull",
                     onClick: ()=>installTag(rowData)
                     ,
@@ -466,7 +463,8 @@ function DockerImageTags(props) {
         }
     };
     const confirm = (action, imageName, title, target = null)=>{
-        (0,primereact_confirmpopup__WEBPACK_IMPORTED_MODULE_8__.confirmPopup)({
+        (0,primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({
+            className: 'confirm-dialogs',
             message: title,
             target: (target === null || target === void 0 ? void 0 : target.currentTarget) ? target.currentTarget : null,
             header: 'Confirmation',
@@ -484,6 +482,7 @@ function DockerImageTags(props) {
     };
     const confirmDialogPopup = (action, title, data)=>{
         (0,primereact_confirmdialog__WEBPACK_IMPORTED_MODULE_7__.confirmDialog)({
+            className: 'confirm-dialogs',
             message: title,
             header: 'Confirmation',
             icon: 'pi pi-exclamation-triangle',
@@ -540,7 +539,7 @@ function DockerImageTags(props) {
                         className: "p-3",
                         children: "Previous"
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_11__.Ripple, {})
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_10__.Ripple, {})
                 ]
             }));
         },
@@ -555,7 +554,7 @@ function DockerImageTags(props) {
                         className: "p-3",
                         children: "Next"
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_11__.Ripple, {})
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_10__.Ripple, {})
                 ]
             }));
         },
@@ -578,7 +577,7 @@ function DockerImageTags(props) {
                 onClick: options.onClick,
                 children: [
                     options.page + 1,
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_11__.Ripple, {})
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_10__.Ripple, {})
                 ]
             }));
         },
@@ -601,7 +600,7 @@ function DockerImageTags(props) {
                     value: 30
                 }, 
             ];
-            return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_dropdown__WEBPACK_IMPORTED_MODULE_12__.Dropdown, {
+            return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_dropdown__WEBPACK_IMPORTED_MODULE_11__.Dropdown, {
                 value: options.value,
                 options: dropdownOptions,
                 onChange: options.onChange
@@ -616,7 +615,7 @@ function DockerImageTags(props) {
                 },
                 children: [
                     "Go to ",
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_13__.InputText, {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__.InputText, {
                         size: "2",
                         className: "ml-1",
                         value: currentPage,
@@ -632,7 +631,7 @@ function DockerImageTags(props) {
     if (isLoading) return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(components_Spinner__WEBPACK_IMPORTED_MODULE_1__/* .Spinner */ .$, {}));
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_toast__WEBPACK_IMPORTED_MODULE_14__.Toast, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_toast__WEBPACK_IMPORTED_MODULE_13__.Toast, {
                 ref: toast
             }),
             !hideProgress && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -650,7 +649,7 @@ function DockerImageTags(props) {
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: "col-2 text-right p-5 m-auto mt-0 pt-0",
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_9__.Button, {
                                     label: "Hide",
                                     onClick: ()=>toggleProgress()
                                     ,
@@ -684,7 +683,7 @@ function DockerImageTags(props) {
                                     " Images"
                                 ]
                             }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_treetable__WEBPACK_IMPORTED_MODULE_17__.TreeTable, {
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_treetable__WEBPACK_IMPORTED_MODULE_16__.TreeTable, {
                                 value: results1,
                                 stripedRows: true,
                                 rowHover: true,
@@ -694,31 +693,31 @@ function DockerImageTags(props) {
                                 ,
                                 loading: tableIsLoading,
                                 children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_15__.Column, {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
                                         field: "name",
                                         header: "Name",
                                         className: "lightblue-color",
                                         expander: true
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_15__.Column, {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
                                         field: "last_updated",
                                         header: "Last Updated",
                                         align: "right",
                                         body: lastUpdatedTemplate
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_15__.Column, {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
                                         field: "status",
                                         header: "Status",
                                         align: "center",
                                         body: tagStatusTemplate
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_15__.Column, {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
                                         field: "size",
                                         header: "Size",
                                         align: "right",
                                         body: sizeTemplate
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_15__.Column, {
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
                                         field: "id",
                                         header: "Action",
                                         align: "center",
@@ -726,7 +725,7 @@ function DockerImageTags(props) {
                                     })
                                 ]
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__.Paginator, {
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_paginator__WEBPACK_IMPORTED_MODULE_15__.Paginator, {
                                 template: template1,
                                 first: tableFirst,
                                 rows: tableRows,

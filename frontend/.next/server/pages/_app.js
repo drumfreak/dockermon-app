@@ -232,13 +232,6 @@ module.exports = require("primereact/confirmdialog");
 
 /***/ }),
 
-/***/ 715:
-/***/ ((module) => {
-
-module.exports = require("primereact/confirmpopup");
-
-/***/ }),
-
 /***/ 2222:
 /***/ ((module) => {
 

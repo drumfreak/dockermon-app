@@ -73,12 +73,9 @@ function JSONDataView(props) {
                 className: "p-0 m-0",
                 children: [
                     !hideCode && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_tabview__WEBPACK_IMPORTED_MODULE_3__.TabPanel, {
-                        header: " Code View",
+                        header: "Code View",
                         className: "p-0 m-0",
                         leftIcon: "fa fa-solid fa-code mr-2",
-                        style: {
-                            overflowX: 'scroll'
-                        },
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: "code-highlighter-background p-0",
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_syntax_highlighter__WEBPACK_IMPORTED_MODULE_4__.Prism, {

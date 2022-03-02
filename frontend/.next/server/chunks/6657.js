@@ -316,6 +316,8 @@ const defaults = {
             showOverlays: true,
             overlayDelay: 1100
         },
+        hostLauncherPort: 3801,
+        hostLauncherEnabled: true,
         theme: {
             main: 'custom'
         },
@@ -356,7 +358,7 @@ const defaults = {
                     showNetworks: false,
                     showNetworkConnect: false,
                     showFiles: false,
-                    showProfiler: true,
+                    showProfiler: false,
                     showEditName: false,
                     showEditResources: false
                 }
