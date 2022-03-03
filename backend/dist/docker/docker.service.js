@@ -35,6 +35,12 @@ let DockerService = DockerService_1 = class DockerService {
     }
     async handleData(data) {
         switch (data.command) {
+            case 'dockerInfo':
+                return await this.dockerInfo(data.hostId);
+            case 'dockerVersion':
+                return await this.dockerVersion(data.hostId);
+            case 'dockerPing':
+                return await this.dockerPing(data.hostId);
             case 'dockerUsage':
                 return await this.dockerUsage(data.hostId);
             case 'inspect':
@@ -103,6 +109,63 @@ let DockerService = DockerService_1 = class DockerService {
                 return this.connectContainerNetwork(data);
             case 'disconnectContainerNetwork':
                 return this.disconnectContainerNetwork(data);
+        }
+    }
+    async dockerInfo(host = 1) {
+        this.logger.verbose('running dockerInfo on hostId: ' + host);
+        const url = await this.dockerHostService.getUrl(host);
+        try {
+            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/info'));
+            if (c.data) {
+                const h = await this.dockerHostService.getHostById(host);
+                if (h) {
+                    h.info = c.data;
+                    await this.dockerHostService.save({ id: h.id, info: h.info });
+                }
+            }
+            return c.data;
+        }
+        catch (error) {
+            this.logger.warn(error);
+            return null;
+        }
+    }
+    async dockerPing(host = 1) {
+        this.logger.verbose('running dockerPing on hostId: ' + host);
+        const url = await this.dockerHostService.getUrl(host);
+        try {
+            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/_ping'));
+            if (c.data) {
+                const h = await this.dockerHostService.getHostById(host);
+                if (h) {
+                    h.ping = c.data === 'OK' ? true : false;
+                    await this.dockerHostService.save({ id: h.id, ping: h.ping });
+                }
+            }
+            return c.data;
+        }
+        catch (error) {
+            this.logger.warn(error);
+            return null;
+        }
+    }
+    async dockerVersion(host = 1) {
+        this.logger.verbose('running dockerVersion on hostId: ' + host);
+        const url = await this.dockerHostService.getUrl(host);
+        try {
+            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/version'));
+            if (c.data) {
+                const h = await this.dockerHostService.getHostById(host);
+                if (h) {
+                    h.version = c.data;
+                    await this.dockerHostService.save({ id: h.id, version: h.DockerVersion });
+                }
+            }
+            return c.data;
+        }
+        catch (error) {
+            this.logger.warn(error);
+            return null;
         }
     }
     async dockerUsage(host = 1) {
@@ -362,7 +425,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async pauseContainer(container) {
-        console.log('pauseContainer', container);
         if (!container) {
             return null;
         }
@@ -383,10 +445,8 @@ let DockerService = DockerService_1 = class DockerService {
             return null;
         }
         try {
-            console.log('CONTAINER', container);
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            console.log('URL========================  ', url);
             const body = {
                 AttachStdin: false,
                 AttachStdout: false,
@@ -396,7 +456,6 @@ let DockerService = DockerService_1 = class DockerService {
                 Privileged: true,
             };
             const b = await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + container.containerId + '/exec', body));
-            console.log(b);
             setTimeout(async () => {
                 try {
                     await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/exec/' + b.data.Id + '/start', { Detach: true, Tty: false }));
@@ -457,7 +516,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async containerFiles(container) {
-        console.log('containerFiles', container);
         if (!container) {
             return null;
         }
@@ -490,7 +548,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async renameContainer(container) {
-        console.log('renameContainer', container);
         if (!container) {
             return null;
         }
@@ -539,7 +596,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async unpauseContainer(container) {
-        console.log('unpauseContainer', container);
         if (!container) {
             return null;
         }
@@ -556,7 +612,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async stopContainer(container) {
-        console.log('stopContainer', container);
         if (!container) {
             return null;
         }
@@ -573,7 +628,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async startContainer(container) {
-        console.log('startContainer', container);
         if (!container) {
             return null;
         }
@@ -589,7 +643,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async restartContainer(container) {
-        console.log('restartContainer', container);
         if (!container) {
             return null;
         }
@@ -606,7 +659,6 @@ let DockerService = DockerService_1 = class DockerService {
     }
     async createContainer(container, hostId = 1) {
         var _a;
-        console.log('createContainer', container);
         if (!container) {
             return null;
         }
@@ -629,7 +681,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async killContainer(container) {
-        console.log('killContainer', container);
         if (!container) {
             return null;
         }
@@ -651,7 +702,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async removeContainer(container) {
-        console.log('removeContainer', container);
         if (!container) {
             return null;
         }
@@ -702,7 +752,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async containerLogs(body) {
-        console.log('containerLogs', body);
         try {
             const hostId = this.getHostId(body);
             let url = await this.dockerHostService.getUrl(hostId);
@@ -814,7 +863,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async createImage(data, hostId = 1) {
-        console.log('createImage', data);
         try {
             let url = await this.dockerHostService.getUrl(hostId);
             url +=
@@ -828,10 +876,8 @@ let DockerService = DockerService_1 = class DockerService {
                     data.data.author +
                     '&comment=' +
                     data.data.message;
-            console.log('URL TO POST', url);
             try {
                 const c = await (0, rxjs_1.firstValueFrom)(this.http.post(url, {}));
-                console.log(c.data);
                 return c.data;
             }
             catch (err) {
@@ -840,11 +886,10 @@ let DockerService = DockerService_1 = class DockerService {
         }
         catch (error) {
             this.logger.warn(error);
-            console.log(error.response.data.message);
+            console.warn(error.response.data.message);
         }
     }
     async removeImage(image) {
-        console.log('removeImage', image);
         if (!image) {
             return null;
         }
@@ -932,7 +977,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async createVolume(data) {
-        console.log('createVolume', data);
         try {
             const hostId = this.getHostId(data);
             let url = await this.dockerHostService.getUrl(hostId);
@@ -951,7 +995,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async removeVolume(volume) {
-        console.log('removeVolume', volume);
         if (!volume) {
             return null;
         }
@@ -1048,7 +1091,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async createNetwork(data) {
-        console.log('createNetwork', data);
         try {
             const hostId = this.getHostId(data);
             let url = await this.dockerHostService.getUrl(hostId);
@@ -1067,7 +1109,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async removeNetwork(network) {
-        console.log('removeNetwork', network);
         if (!network) {
             return null;
         }
@@ -1094,7 +1135,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async connectContainerNetwork(network) {
-        console.log('connectContainerNetwork', network);
         try {
             const hostId = this.getHostId(network);
             let url = await this.dockerHostService.getUrl(hostId);
@@ -1113,7 +1153,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async disconnectContainerNetwork(network) {
-        console.log('disconnectContainerNetwork', network);
         try {
             const hostId = this.getHostId(network);
             let url = await this.dockerHostService.getUrl(hostId);
@@ -1132,12 +1171,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async searchDockerHub(body) {
-        console.log('---------->> searchDockerHub', body);
         try {
             const hostId = this.getHostId(body);
-            console.log('hostId', hostId);
             const url = await this.dockerHostService.getUrl(hostId);
-            console.log('Search URL', url);
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/images/search?term=' + body.data.query));
             return { hook: 'searchDockerHub', data: c.data };
         }
@@ -1147,7 +1183,6 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async dockerHubImage(body) {
-        console.log('dockerHubImage', body);
         try {
             const hostId = this.getHostId(body);
             const url = await this.dockerHostService.getUrl(hostId);

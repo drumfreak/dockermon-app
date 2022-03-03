@@ -5,10 +5,12 @@ export declare class ActivityLogController {
     getActivityLogs(body: any): Promise<{
         status: string;
         data: import("./activity-logs.entity").ActivityLog[];
+        totalCount: number;
         message?: undefined;
     } | {
         status: string;
         data: any[];
+        totalCount: number;
         message: any;
     }>;
     getActivityLog(param: any): Promise<{

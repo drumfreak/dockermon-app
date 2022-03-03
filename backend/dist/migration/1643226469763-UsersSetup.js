@@ -6,7 +6,7 @@ class UsersSetup1643226469763 {
         console.log('User Migration creating role Admin....');
         await queryRunner.query(`INSERT INTO roles (name) VALUES('Admin')`);
         console.log('User Migration creating User dockermon@test.com with pass test1234');
-        await queryRunner.query(`INSERT INTO users (email, password, userRole, firstName, lastName) VALUES('dockermon@test.com', '$2b$08$qdA7SKk7q.BGonAWyGeW8OM88rqCmwYjwwT3DVs0MYyOGAQL6A2sS', 1, 'Admin', 'User')`);
+        await queryRunner.query(`INSERT INTO users (email, password, userRole, firstName, lastName) VALUES('whale@dockermon.com', '$2b$08$PlwPLh3EhxGhnvPZMq4ykuGgrOMJfKfsv75g9156lfeZNIH/AOrIi', 1, 'Admin', 'User')`);
         console.log('Host Migration creating default host');
         await queryRunner.query(`INSERT INTO docker_host (id, name, ipAddress, port, active, connectionType) VALUES (1, 'localhost', 'localhost', 2375, 1, 'http')`);
     }

@@ -16,6 +16,9 @@ export declare class DockerService {
     private readonly exec;
     constructor(http: HttpService, containersService: ContainersService, dockerImagesService: DockerImagesService, dockerVolumesService: DockerVolumesService, dockerNetworkService: DockerNetworksService, dockerHostService: DockerHostsService);
     handleData(data: any): Promise<any>;
+    dockerInfo(host?: number): Promise<any>;
+    dockerPing(host?: number): Promise<any>;
+    dockerVersion(host?: number): Promise<any>;
     dockerUsage(host?: number): Promise<{
         volumes: any;
         containers: any;

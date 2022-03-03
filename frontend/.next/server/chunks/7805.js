@@ -40,8 +40,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(primereact_column__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var primereact_timeline__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(3106);
 /* harmony import */ var primereact_timeline__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(primereact_timeline__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(6895);
+/* harmony import */ var primereact_paginator__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(1404);
+/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(primereact_dropdown__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(1267);
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(4355);
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(primereact_utils__WEBPACK_IMPORTED_MODULE_19__);
 
 /* eslint-disable react-hooks/exhaustive-deps */ /* eslint-disable no-unused-vars */ 
+
+
+
+
 
 
 
@@ -97,6 +109,29 @@ function ActivityLogIndex(props) {
     selectedRowsRef.current = selectedRows;
     const { 0: filters1 , 1: setFilters1  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const { 0: globalFilterValue1 , 1: setGlobalFilterValue1  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const { 0: tableIsLoading , 1: setTableIsLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const tableIsLoadingRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(tableIsLoading);
+    tableIsLoadingRef.current = tableIsLoading;
+    // Paginator
+    const { 0: currentPage , 1: setCurrentPage  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1);
+    const currentPageRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(currentPage);
+    currentPageRef.current = currentPage;
+    const { 0: pageInputTooltip , 1: setPageInputTooltip  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("Press 'Enter' key to go to this page.");
+    const { 0: tableFirst , 1: setTableFirst  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1);
+    const tableFirstRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(tableFirst);
+    tableFirstRef.current = tableFirst;
+    const { 0: tableRows , 1: setTableRows  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(25);
+    const tableRowsRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(tableRows);
+    tableRowsRef.current = tableRows;
+    const { 0: totalRecords , 1: setTotalRecords  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
+    const totalRecordsRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(totalRecords);
+    totalRecordsRef.current = totalRecords;
+    const { 0: sortField , 1: setSortField  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('updatedAt');
+    const sortFieldRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(sortField);
+    sortFieldRef.current = sortField;
+    const { 0: tableSortOrder , 1: setTableSortOrder  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(-1);
+    const tableSortOrderRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(tableSortOrder);
+    tableSortOrderRef.current = tableSortOrder;
     const events = [];
     // eslint-disable-next-line react-hooks/exhaustive-deps
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
@@ -171,26 +206,30 @@ function ActivityLogIndex(props) {
     //   return socket;
     // }
     async function loadData() {
+        console.log('contentTypeRef.current', contentTypeRef.current);
         const where = {
-            limit: 15,
-            sortKey: 'activityLogs.updatedAt',
+            limit: tableRowsRef.current,
+            skip: tableFirstRef.current,
+            sortKey: sortFieldRef.current,
             sortType: 'DESC'
         };
-        if (contentType) {
-            where.contentType = contentType;
+        if (contentTypeRef.current) {
+            where.contentType = contentTypeRef.current;
         }
-        if (contentId) {
-            where.contentId = contentId;
+        if (contentIdRef.current) {
+            where.contentId = contentIdRef.current;
         }
         const c = await services_activity_logs_service__WEBPACK_IMPORTED_MODULE_7__/* .activityLogsService.getActivityLogs */ .u.getActivityLogs(where);
         if ((c === null || c === void 0 ? void 0 : c.status) === 'success') {
             await setItems(c.data);
-            console.log('activityLogs', c.data);
+            await setTotalRecords(c.totalCount);
+            // console.log('activityLogs', c);
             setTimeout(()=>{
                 processData();
-            }, 1000);
+            }, 100);
         }
         setIsLoading(false);
+        setTableIsLoading(true);
     }
     async function processData() {
         var ref;
@@ -209,6 +248,7 @@ function ActivityLogIndex(props) {
                 setTimeItems(tItems);
             }
         }
+        setTableIsLoading(false);
     }
     // if (isLoading) return <Spinner />;
     if (error) return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -317,23 +357,6 @@ function ActivityLogIndex(props) {
             children: rowData.action
         }));
     };
-    const sizeTemplate = (rowData)=>{
-        return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-            children: rowData.samples
-        }));
-    };
-    const buttonTemplate = (rowData)=>{
-        return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
-                label: "",
-                onClick: (e)=>{
-                    confirm('removeActivityLog', rowData, 'Remove ' + rowData.name + '?', e);
-                },
-                className: "p-button-secondary",
-                icon: "pi pi-trash"
-            })
-        }));
-    };
     const removeActivityLog = (activityLog)=>{
         socketRef.current.emit('docker', {
             command: 'removeActivityLog',
@@ -377,8 +400,180 @@ function ActivityLogIndex(props) {
         });
         setSelectedRows(null);
     };
-    // if (items?.length === 0) return <Spinner />;
-    // const nitems = (itemsRef.current?.length > 0) ? itemsRef.current.slice(0, 100) : [];
+    // const sortChange = (event) => {
+    //   // event.preventDefault();
+    //   console.log('Sort Change', event);
+    // };
+    const handlePageChange = (event)=>{
+        setTableIsLoading(true);
+        if (event.rows !== tableRowsRef.current) {
+            setTimeout(()=>{
+                setTableRows(event.rows);
+                setTableFirst(0);
+                setCurrentPage(1);
+                loadData();
+            }, 100);
+        } else {
+            setTimeout(()=>{
+                setTableFirst(event.first);
+                setCurrentPage(event.page + 1);
+                loadData();
+            });
+        }
+    };
+    const onPageInputKeyDown = (event, options)=>{
+        if (event.key === 'Enter') {
+            const page = parseInt(currentPage);
+            if (page < 0 || page > options.totalPages) {
+                setPageInputTooltip(`Value must be between 1 and ${options.totalPages}.`);
+            } else {
+                const first = currentPage ? options.rows * (page - 1) : 0;
+                setTableFirst(first);
+                setPageInputTooltip("Press 'Enter' key to go to this page.");
+            }
+        }
+    };
+    const onPageInputChange = (event)=>{
+        setCurrentPage(event.target.value);
+    };
+    const template1 = {
+        layout: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown CurrentPageReport',
+        FirstPageLink: (options)=>{
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                type: "button",
+                className: options.className,
+                onClick: options.onClick,
+                disabled: options.disabled,
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                        className: "p-3",
+                        children: "<<"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__.Ripple, {})
+                ]
+            }));
+        },
+        PrevPageLink: (options)=>{
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                type: "button",
+                className: options.className,
+                onClick: options.onClick,
+                disabled: options.disabled,
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                        className: "p-3",
+                        children: "Previous"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__.Ripple, {})
+                ]
+            }));
+        },
+        NextPageLink: (options)=>{
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                type: "button",
+                className: options.className,
+                onClick: options.onClick,
+                disabled: options.disabled,
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                        className: "p-3",
+                        children: "Next"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__.Ripple, {})
+                ]
+            }));
+        },
+        PageLinks: (options)=>{
+            if (options.view.startPage === options.page && options.view.startPage !== 0 || options.view.endPage === options.page && options.page + 1 !== options.totalPages) {
+                const className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_19__.classNames)(options.className, {
+                    'p-disabled': true
+                });
+            // return (
+            //   <span className={className} style={{ userSelect: 'none' }}>
+            //     ...
+            //   </span>
+            // );
+            }
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                type: "button",
+                className: options.className,
+                onClick: options.onClick,
+                children: [
+                    options.page + 1,
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__.Ripple, {})
+                ]
+            }));
+        },
+        LastPageLink: (options)=>{
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {
+                type: "button",
+                className: options.className,
+                onClick: options.onClick,
+                disabled: options.disabled,
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                        className: "p-3",
+                        children: ">>"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_ripple__WEBPACK_IMPORTED_MODULE_18__.Ripple, {})
+                ]
+            }));
+        },
+        RowsPerPageDropdown: (options)=>{
+            const dropdownOptions = [
+                {
+                    label: 10,
+                    value: 10
+                },
+                {
+                    label: 15,
+                    value: 15
+                },
+                {
+                    label: 25,
+                    value: 25
+                },
+                {
+                    label: 50,
+                    value: 50
+                },
+                {
+                    label: 100,
+                    value: 100
+                },
+                {
+                    label: 150,
+                    value: 150
+                }, 
+            ];
+            return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_dropdown__WEBPACK_IMPORTED_MODULE_17__.Dropdown, {
+                value: options.value,
+                options: dropdownOptions,
+                onChange: options.onChange
+            }));
+        },
+        CurrentPageReport: (options)=>{
+            return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                className: "mx-3",
+                style: {
+                    color: 'var(--text-color)',
+                    userSelect: 'none'
+                },
+                children: [
+                    "Go to ",
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__.InputText, {
+                        size: "2",
+                        className: "ml-1",
+                        value: currentPage,
+                        tooltip: pageInputTooltip,
+                        onKeyDown: (e)=>onPageInputKeyDown(e, options)
+                        ,
+                        onChange: onPageInputChange
+                    })
+                ]
+            }));
+        }
+    };
     return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             children: [
@@ -390,12 +585,12 @@ function ActivityLogIndex(props) {
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__.FontAwesomeIcon, {
-                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faFolder,
+                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faList12,
                                         pull: "left",
                                         className: "fa-1x lightblue-color mt-0 pt-0",
                                         swapOpacity: true
                                     }),
-                                    "Activity Logs 234"
+                                    "Activity Logs"
                                 ]
                             })
                         }),
@@ -449,82 +644,74 @@ function ActivityLogIndex(props) {
                     stripedRows: true,
                     rowHover: true,
                     showGridlines: true,
-                    selection: selectedRows,
-                    onSelectionChange: (e)=>selectRows(e)
-                    ,
-                    paginator: true,
-                    rows: 15,
+                    // selection={selectedRows}
+                    // onSelectionChange={(e) => selectRows(e)}
+                    // paginator
+                    rows: tableRows,
                     totalRecords: items === null || items === void 0 ? void 0 : items.length,
                     dataKey: "id",
-                    rowsPerPageOptions: [
-                        10,
-                        15,
-                        20,
-                        50,
-                        100,
-                        200
-                    ],
                     sortMode: "single",
-                    responsiveLayout: "scroll",
-                    sortField: "updatedAt",
-                    sortOrder: -1,
-                    filters: filters1,
-                    filterDisplay: "menu",
-                    loading: isLoadingRef.current,
-                    // loading={loading1}
+                    // responsiveLayout="scroll"
+                    sortField: sortField,
+                    sortOrder: tableSortOrder,
+                    // filters={filters1}
+                    // filterDisplay="menu"
+                    // loading={isLoadingRef.current}
+                    loading: tableIsLoading,
                     // responsiveLayout="scroll"
                     globalFilterFields: [
                         'name',
-                        'imageId',
-                        'tag'
+                        'contentId',
+                        'action'
                     ],
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            sortable: true,
+                            style: {
+                                width: '220px'
+                            },
                             field: "updatedAt",
                             header: "Date",
                             body: dateTemplate
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            sortable: true,
+                            style: {
+                                width: '220px'
+                            },
                             field: "host.name",
                             body: hostTemplate,
-                            header: "Host",
-                            filter: true,
-                            filterPlaceholder: "Search by host",
+                            header: "Host"
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                            style: {
+                                width: '150px'
+                            },
+                            field: "contentType",
+                            header: "Type",
                             align: "left"
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            sortable: true,
                             field: "contentName",
                             body: nameTemplate,
                             header: "Name",
-                            filter: true,
-                            filterPlaceholder: "Search by name",
                             align: "left"
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            sortable: true,
+                            style: {
+                                width: '320px'
+                            },
                             field: "action",
                             body: actionTemplate,
                             header: "action",
-                            filter: true,
-                            filterPlaceholder: "Search by action",
-                            align: "left"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            field: "action",
-                            body: buttonTemplate,
-                            header: "action",
-                            align: "left"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            selectionMode: "multiple",
-                            headerStyle: {
-                                width: '3em'
-                            }
+                            align: "center"
                         })
                     ]
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__.Paginator, {
+                    template: template1,
+                    first: tableFirst,
+                    rows: tableRows,
+                    totalRecords: totalRecords,
+                    onPageChange: handlePageChange
                 }),
                 (selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.length) > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "col-12 text-right pr-2",

@@ -11,10 +11,12 @@ export declare class ActivityLogService {
     getActivityLogs(body: any): Promise<{
         status: string;
         data: ActivityLog[];
+        totalCount: number;
         message?: undefined;
     } | {
         status: string;
         data: any[];
+        totalCount: number;
         message: any;
     }>;
     save(activityLog: any): Promise<any>;

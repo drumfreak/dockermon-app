@@ -12,8 +12,8 @@ async function bootstrap() {
         strategy: new workers_socket_io_client_strategy_1.WorkersSocketIoClientStrategy(socketIoClientProvider.getSocket()),
     });
     await app.startAllMicroservices();
-    process.env.WORKER_HTTP_PORT = (_a = process.env.WORKER_HTTP_PORT) !== null && _a !== void 0 ? _a : '4009';
-    await app.listen(process.env.WORKER_HTTP_PORT);
+    process.env.DOCKERMON_WORKER_HTTP_PORT = (_a = process.env.DOCKERMON_WORKER_HTTP_PORT) !== null && _a !== void 0 ? _a : '4009';
+    await app.listen(process.env.DOCKERMON_WORKER_HTTP_PORT);
     console.debug(`Worker is running on ${await app.getUrl()}`);
 }
 bootstrap();

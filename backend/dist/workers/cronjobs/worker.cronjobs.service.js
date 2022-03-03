@@ -69,7 +69,7 @@ let WorkerCronjobsService = WorkerCronjobsService_1 = class WorkerCronjobsServic
     async getContainersStats(host) {
         try {
             if (host.ipAddress === 'localhost' || host.ipAddress === '127.0.0.1') {
-                host.ipAddress = process.env.WORKER_HOST_ADDRESS;
+                host.ipAddress = process.env.DOCKERMON_WORKER_HOST_ADDRESS;
             }
             const url = host.connectionType + '://' + host.ipAddress + ':' + host.port;
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/containers/json?all=false'));

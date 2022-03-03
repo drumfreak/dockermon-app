@@ -19,6 +19,8 @@ const typeorm_1 = require("typeorm");
 let DockerHost = class DockerHost {
     constructor() {
         this.details = {};
+        this.version = {};
+        this.info = {};
         this.usageData = {};
     }
 };
@@ -109,6 +111,22 @@ __decorate([
         nullable: true,
     }),
     __metadata("design:type", Object)
+], DockerHost.prototype, "version", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'json',
+        default: null,
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
+], DockerHost.prototype, "info", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'json',
+        default: null,
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
 ], DockerHost.prototype, "usageData", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: 0 }),
@@ -118,6 +136,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], DockerHost.prototype, "active", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], DockerHost.prototype, "ping", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',

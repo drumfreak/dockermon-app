@@ -95,9 +95,7 @@ function JSONDataView(props) {
                         leftIcon: "fa fa-solid fa-tree mr-2",
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: "code-highlighter-background p-2",
-                            style: {
-                                overflowX: 'scroll'
-                            },
+                            style: {},
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_json_tree__WEBPACK_IMPORTED_MODULE_6__.JSONTree, {
                                 className: "m-0",
                                 data: props.data,
@@ -115,9 +113,7 @@ function JSONDataView(props) {
                         leftIcon: "fa fa-fw fa-file mr-2",
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: "code-highlighter-background p-2 mt-0",
-                            style: {
-                                overflowX: 'scroll'
-                            },
+                            style: {},
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("pre", {
                                 className: "p-0 m-0",
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("code", {

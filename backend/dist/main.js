@@ -5,7 +5,7 @@ const common_1 = require("@nestjs/common");
 const app_module_1 = require("./app.module");
 require("dotenv/config");
 const redis_io_adapter_1 = require("./adapters/redis-io.adapter");
-const port = process.env.BACKEND_API_PORT;
+const port = process.env.DOCKERMON_BACKEND_API_PORT;
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     await app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));

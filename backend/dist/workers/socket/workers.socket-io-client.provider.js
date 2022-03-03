@@ -23,7 +23,7 @@ let WorkersSocketIoClientProvider = class WorkersSocketIoClientProvider {
         };
     }
     connect() {
-        const server = 'ws://' + process.env.WORKER_HOST_ADDRESS + ':' + this.config.get('BACKEND_WS_PORT') + '/events';
+        const server = 'ws://' + process.env.DOCKERMON_WORKER_HOST_ADDRESS + ':' + this.config.get('DOCKERMON_BACKEND_WS_PORT') + '/events';
         this.socket = (0, socket_io_client_1.io)(server);
         this.socket.emit('ping', { message: 'hello' });
         return this.socket;

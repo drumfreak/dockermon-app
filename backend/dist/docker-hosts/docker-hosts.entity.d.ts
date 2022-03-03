@@ -13,9 +13,12 @@ export declare class DockerHost {
     architecture: string;
     hostname: string;
     details: any;
+    version: any;
+    info: any;
     usageData: any;
     containerCount: number;
     active: boolean;
+    ping: boolean;
     dockerVersion: string;
     os: string;
     status: string;

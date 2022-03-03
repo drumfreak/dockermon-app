@@ -64,21 +64,21 @@ let ActivityLogService = ActivityLogService_1 = class ActivityLogService {
                 order[body.sortKey] = body.sortType;
             }
             else {
-                order = { createdAt: 'DESC' };
+                order = { updatedAt: 'DESC' };
             }
             console.log('activityLogs Where', where);
             console.log('activityLogs Order', order);
-            const f = await this.activityLogRepository
-                .createQueryBuilder('activityLogs')
-                .leftJoinAndSelect('activityLogs.host', 'host')
-                .take(take)
-                .skip(skip)
-                .orderBy(order)
-                .where(where)
-                .getMany();
+            const [f, count] = await this.activityLogRepository.findAndCount({
+                skip: skip,
+                take: take,
+                where: where,
+                order: order,
+                relations: ["host"]
+            });
             return {
                 status: 'success',
                 data: f ? f : [],
+                totalCount: count,
             };
         }
         catch (error) {
@@ -86,6 +86,7 @@ let ActivityLogService = ActivityLogService_1 = class ActivityLogService {
             return {
                 status: 'fail',
                 data: [],
+                totalCount: 0,
                 message: error.message,
             };
         }
