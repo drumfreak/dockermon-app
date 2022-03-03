@@ -25,7 +25,7 @@ then
     sleep 5
 fi
 
-if [ $ENABLE_GIT_UPDATE ]
+if [ $DOCKERMON_ENABLE_GIT_UPDATE ]
 then
     cd /app
     if [ ! -d "/app/dockermon-app/.git" ]
@@ -34,6 +34,11 @@ then
     fi
 
     cd dockermon-app
+
+    if [ $DOCKERMON_ENABLE_GIT_BRANCH ]
+    then
+        git checkout $DOCKERMON_ENABLE_GIT_BRANCH
+    fi
     git pull
 fi
 
