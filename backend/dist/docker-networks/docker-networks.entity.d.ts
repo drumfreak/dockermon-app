@@ -10,6 +10,7 @@ export declare class DockerNetwork {
     active: boolean;
     status: string;
     driver: string;
+    protected: boolean;
     scope: string;
     error: string;
     createdDate: Date;

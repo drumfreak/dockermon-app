@@ -206,7 +206,7 @@ function ActivityLogIndex(props) {
     //   return socket;
     // }
     async function loadData() {
-        console.log('contentTypeRef.current', contentTypeRef.current);
+        // console.log('contentTypeRef.current', contentTypeRef.current);
         const where = {
             limit: tableRowsRef.current,
             skip: tableFirstRef.current,

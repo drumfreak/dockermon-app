@@ -42,7 +42,6 @@ function Header() {
         ;
     }, []);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        // console.log('User Id has changed', userId);
         if (userId && userId !== 'undefined') {
             fetchUser();
         }
@@ -57,7 +56,6 @@ function Header() {
                     if (a.status === 'success') {
                         var ref;
                         if ((ref = a.data) === null || ref === void 0 ? void 0 : ref.userSettings) {
-                            // console.log('My settings', a.data.userSettings);
                             dispatch((0,store_actions_site_actions__WEBPACK_IMPORTED_MODULE_6__/* .setUserSettings */ .m9)(a.data.userSettings));
                         }
                         setUser(a.data);
@@ -153,8 +151,8 @@ function LeftMenu() {
     const { 0: showMenuOptions , 1: setShowMenuOptions  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const showMenuOptionsRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(showMenuOptions);
     showMenuOptionsRef.current = showMenuOptions;
-    const { 0: filterValue , 1: setFilterValue  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const { 0: filterValue1 , 1: setFilterValue1  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const { 0: filterValue , 1: setFilterValue  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const { 0: filterValue1 , 1: setFilterValue1  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         const subscription = _services_auth_service__WEBPACK_IMPORTED_MODULE_2__/* .authService.user.subscribe */ .O.user.subscribe((x)=>setUser(x)
         );
@@ -192,11 +190,9 @@ function LeftMenu() {
     const updateFilterValue = (e)=>{
         setFilterValue1(e);
         // if (filterTimerRef.current) {
-        //   // console.log('clear timeout');
         //   clearTimeout(filterTimerRef.current);
         // }
         // const timer = setTimeout(() => {
-        //   console.log('filter value', e);
         setFilterValue(e);
     // }, 300);
     // setFilterTimer(timer);
@@ -2540,7 +2536,7 @@ services_socket_service__WEBPACK_IMPORTED_MODULE_7__ = (__webpack_async_dependen
 
 const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)((props, ref7)=>{
     var ref1, ref2, ref3, ref4, ref5;
-    const { 0: container1 , 1: setContainer  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const { 0: container1 , 1: setContainer  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const containerRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(container1);
     containerRef.current = container1;
     const opRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);

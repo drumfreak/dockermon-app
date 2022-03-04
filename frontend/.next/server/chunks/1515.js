@@ -34,10 +34,17 @@ const socketService = {
 };
 function connect() {
     console.debug('Welcome to Dockermon. I am happy you are using this app!\r\n\r\nSince you are reading this then you must be an 1337 geek like me who digs under the hood and into the consoles, APIs, etc. Nice to meet you.\r\n\r\nI was inspired to build this app because I love Docker and the Engine API is awesome.\r\n\r\nI am looking for fun opportunities to build more cool software.\r\n\r\nContact me at https://github.com/drumfreak and lets connect!\r\n\r\n');
-    socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrl, {
-        timeout: 5000000,
-        'connect timeout': 5000000
-    });
+    const options = {
+        transportOptions: {
+            timeout: 500000,
+            polling: {
+                extraHeaders: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+        }
+    };
+    socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrl, options);
     socket.on('connect', function() {
         console.debug('----------~~~~~~~> Socket Connected, that is a good thing.');
     // getImages();
@@ -59,10 +66,17 @@ function connect() {
 }
 function connectLauncher() {
     try {
-        launcherSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrlLauncher, {
-            timeout: 5000000,
-            'connect timeout': 5000000
-        });
+        const options = {
+            transportOptions: {
+                timeout: 500000,
+                polling: {
+                    extraHeaders: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            }
+        };
+        launcherSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrlLauncher, options);
         launcherSocket.on('connect', function() {
             console.debug('----------~~~~~~~> Host Launcher Socket Connected, that is a good thing.');
         // getImages();
@@ -86,10 +100,17 @@ function connectLauncher() {
     }
 }
 async function getNewSocket(name = 'Auto') {
-    const newSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrl, {
-        timeout: 500000,
-        'connect timeout': 500000
-    });
+    const options = {
+        transportOptions: {
+            timeout: 500000,
+            polling: {
+                extraHeaders: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+        }
+    };
+    const newSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrl, options);
     newSocket.on('connect', function() {
     // console.info(name, 'Socket Connected');
     // getImages();
@@ -109,10 +130,17 @@ async function getNewSocket(name = 'Auto') {
     return newSocket;
 }
 async function getNewLauncherSocket(name = 'Auto') {
-    const newSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrlLauncher, {
-        timeout: 500000,
-        'connect timeout': 500000
-    });
+    const options = {
+        transportOptions: {
+            timeout: 500000,
+            polling: {
+                extraHeaders: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+        }
+    };
+    const newSocket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_1__["default"])(publicRuntimeConfig.webSocketUrlLauncher, options);
     newSocket.on('connect', function() {
         console.debug('----------~~~~~~~> Host Launcher Socket Connected, that is a good thing.');
     });

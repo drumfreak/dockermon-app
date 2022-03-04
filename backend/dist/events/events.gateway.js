@@ -31,6 +31,7 @@ const axios_1 = require("@nestjs/axios");
 const bull_1 = require("@nestjs/bull");
 const docker_hosts_service_1 = require("../docker-hosts/docker-hosts.service");
 const site_data_service_1 = require("../docker/site-data.service");
+const events_guard_1 = require("./events.guard");
 let EventsGateway = EventsGateway_1 = class EventsGateway {
     constructor(containerService, dockerImageService, statsService, dockerService, dockerHubService, http, dockerHostService, siteDataService, eventsQueue) {
         this.containerService = containerService;
@@ -74,6 +75,31 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 default:
                     if (data.command === 'createHost') {
                         const b = await this.dockerHostService.save(data.data);
+                        if (b)
+                            c = { data: b };
+                    }
+                    else if (data.command === 'disableHost') {
+                        const host = await this.dockerHostService.getHostById(data.host.id);
+                        if (!host) {
+                            throw new Error('Host not found');
+                        }
+                        host.active = false;
+                        const b = await this.dockerHostService.save(host);
+                        if (b)
+                            c = { data: b };
+                    }
+                    else if (data.command === 'enableHost') {
+                        const host = await this.dockerHostService.getHostById(data.host.id);
+                        if (!host) {
+                            throw new Error('Host not found');
+                        }
+                        host.active = true;
+                        const b = await this.dockerHostService.save(host);
+                        if (b)
+                            c = { data: b };
+                    }
+                    else if (data.command === 'removeHost') {
+                        const b = await this.dockerHostService.removeHost({ id: data.host.id });
                         if (b)
                             c = { data: b };
                     }
@@ -188,7 +214,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                     emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerResults' : data.callback;
                     this.server.to(client.id).emit(emitTo, results);
                     if (data.command === 'inspect') {
-                        console.log('Inspect');
                         const results = { status: 'success', type: 'container', action: 'update', data: c };
                         this.server.emit('dockerEventsReceiver', results);
                     }
@@ -224,7 +249,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 skip = false;
             }
             catch (error) {
-                console.log('Issue parsing JSON on dockerPullResults');
                 skip = true;
             }
             if (skip)
@@ -292,7 +316,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         try {
             this.logger.log('Docker createVolume', data);
             const c = await this.dockerService.createVolume(data);
-            console.log('dockerCreateVolume result: ', c);
             this.server.to(client.id).emit(emitTo, { status: 'success', hook: data.hook, callback: data.callback, data: c });
         }
         catch (error) {
@@ -341,12 +364,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerContainerLogs' : data.callback;
                 this.server.to(client.id).emit(emitTo, { status: status, data: rt, message });
             });
-            this.containerLogSockets[client.id].inoutStream.on('end', () => {
-                console.log('closing pipe');
-            });
-            this.containerLogSockets[client.id].inoutStream.on('destroy', () => {
-                console.log('destroy pipe');
-            });
             let url = await this.dockerHostService.getUrl(data.hostId);
             url += '/containers/' + data.containerId + '/logs?stdout=true&stderr=true&since=0&timestamps=false&follow=true&tail=100';
             this.http
@@ -361,7 +378,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
     }
     async dockerContainerLogsClose(data, client) {
         if (this.containerLogSockets[client.id]) {
-            console.log('Detaching from logs', client.id);
             this.containerLogSockets[client.id].stopSignal$.next();
             delete this.containerLogSockets[client.id];
         }
@@ -398,7 +414,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         this.server.to(data.clientId).emit(data.emitTo, data.data);
     }
     async dockerAttachCommand(data, client) {
-        console.log('Docker Attach', client.id, data);
         if (data.action === 'close') {
             if (this.containerSockets[client.id]) {
                 console.log('Closing Connection');
@@ -526,6 +541,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "pingReceiver", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('getContainers'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -534,6 +550,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "getContainers", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('hosts'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -542,6 +559,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "hostsList", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('siteData'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -550,6 +568,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "siteData", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('docker'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -558,6 +577,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerCommand", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerPullImage'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -566,6 +586,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerPullImage", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerCreateImage'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -574,6 +595,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerCreateImage", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerCreateVolume'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -582,6 +604,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerCreateVolume", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerCreateContainer'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -590,6 +613,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerCreateContainer", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerContainerLogs'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -598,6 +622,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerContainerLogs", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerContainerLogsClose'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -606,6 +631,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerContainerLogsClose", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerContainerMonitor'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -614,6 +640,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerContainerMonitor", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerContainerMonitorClose'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -629,6 +656,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerContainerMonitorRelay", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('dockerAttach'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -637,6 +665,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "dockerAttachCommand", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('stats'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
@@ -645,6 +674,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "stats", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('identity'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
@@ -652,6 +682,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "identity", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('openTerminal'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
@@ -659,6 +690,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "openTerminal", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('openFinderPath'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
@@ -666,6 +698,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "openFinderPath", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('openVSCodePath'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
@@ -673,6 +706,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "openVSCodePath", null);
 __decorate([
+    (0, common_1.UseGuards)(events_guard_1.default),
     (0, websockets_1.SubscribeMessage)('tailLogs'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),

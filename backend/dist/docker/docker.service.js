@@ -659,6 +659,7 @@ let DockerService = DockerService_1 = class DockerService {
     }
     async createContainer(container, hostId = 1) {
         var _a;
+        console.log('createContainer', container);
         if (!container) {
             return null;
         }
@@ -667,9 +668,15 @@ let DockerService = DockerService_1 = class DockerService {
             const f = await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/create?name=' + container.name, container));
             if (f.status === 201) {
                 if ((_a = f.data) === null || _a === void 0 ? void 0 : _a.Id) {
-                    const container = { containerId: f.data.Id.substring(0, 12), hostId: hostId };
-                    const c = await this.inspectContainer(container);
-                    return c;
+                    const tmpContainer = { containerId: f.data.Id.substring(0, 12), hostId: hostId };
+                    const c = await this.inspectContainer(tmpContainer);
+                    if (c) {
+                        const c2 = c;
+                        c2.dockerTemplate = container;
+                        await this.containersService.save(c);
+                        return c2;
+                    }
+                    return null;
                 }
                 else {
                     throw Error('Could not create container');
@@ -693,7 +700,7 @@ let DockerService = DockerService_1 = class DockerService {
                 return c;
             }
             else {
-                throw Error('Could remove create container');
+                throw Error('Could not remove create container');
             }
         }
         catch (error) {
@@ -878,15 +885,21 @@ let DockerService = DockerService_1 = class DockerService {
                     data.data.message;
             try {
                 const c = await (0, rxjs_1.firstValueFrom)(this.http.post(url, {}));
-                return c.data;
+                if (c.data) {
+                    const c2 = await this.inspectImage({ imageId: c.data.Id, hostId });
+                    if (c2) {
+                        return c2;
+                    }
+                }
+                return null;
             }
             catch (err) {
-                console.log('Error', err.response.data.message);
+                throw err;
             }
         }
         catch (error) {
             this.logger.warn(error);
-            console.warn(error.response.data.message);
+            throw new Error(error.response.data.message);
         }
     }
     async removeImage(image) {

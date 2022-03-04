@@ -107,7 +107,7 @@ function ImagesIndex() {
             return;
         }
         if (!images || !((ref = images[activeHost.id]) === null || ref === void 0 ? void 0 : ref.images)) {
-            console.log('returning');
+            // console.log('returning');
             return;
         }
         // console.log('Refreshing containers, host list changed');
@@ -198,7 +198,7 @@ function ImagesIndex() {
         setFilters1(_filters1);
         setGlobalFilterValue1(value);
     };
-    console.log('Images', images);
+    // console.log('Images', images);
     // if (isLoading) return <Spinner />;
     if (error) return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         children: [

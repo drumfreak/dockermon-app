@@ -22,6 +22,7 @@ export declare class DockerImage {
     virtualSize: number;
     sharedSize: number;
     active: boolean;
+    protected: boolean;
     dockerVersion: string;
     os: string;
     status: string;

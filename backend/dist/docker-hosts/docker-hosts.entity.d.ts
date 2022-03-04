@@ -19,6 +19,7 @@ export declare class DockerHost {
     containerCount: number;
     active: boolean;
     ping: boolean;
+    protected: boolean;
     dockerVersion: string;
     os: string;
     status: string;

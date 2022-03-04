@@ -36,6 +36,8 @@ export declare class Container {
     ports: any;
     portsInUse: any;
     usageData: any;
+    dockerTemplate: any;
+    protected: boolean;
     createdAt: Date;
     updatedAt: Date;
     deleted: Date;

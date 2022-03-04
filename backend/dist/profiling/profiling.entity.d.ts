@@ -20,6 +20,7 @@ export declare class Profiling {
     dates: any;
     jobData: any;
     samples: number;
+    protected: boolean;
     notes: string;
     startDate: Date;
     endDate: Date;

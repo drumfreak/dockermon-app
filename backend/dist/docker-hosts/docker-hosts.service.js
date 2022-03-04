@@ -99,6 +99,9 @@ let DockerHostsService = DockerHostsService_1 = class DockerHostsService {
         try {
             const c = await this.hostRepository.findOne(where);
             if (c) {
+                if (c.protected) {
+                    throw new Error('Host is protected, cannot delete');
+                }
                 const f = await this.hostRepository.delete(where);
                 if (f) {
                     return f;

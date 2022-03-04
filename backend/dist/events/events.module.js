@@ -25,6 +25,7 @@ const bull_1 = require("@nestjs/bull");
 const docker_networks_module_1 = require("../docker-networks/docker-networks.module");
 const docker_hosts_module_1 = require("../docker-hosts/docker-hosts.module");
 const site_data_service_1 = require("../docker/site-data.service");
+const jwt_1 = require("@nestjs/jwt");
 let EventsModule = class EventsModule {
 };
 EventsModule = __decorate([
@@ -34,6 +35,7 @@ EventsModule = __decorate([
             bull_1.BullModule.registerQueue({
                 name: 'eventsProcessor',
             }),
+            jwt_1.JwtModule.register({ secret: process.env.JWT_SECRET }),
             axios_1.HttpModule,
             stats_module_1.StatsModule,
             containers_module_1.ContainersModule,

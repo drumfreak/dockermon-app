@@ -28,6 +28,7 @@ let Container = class Container {
         this.ports = {};
         this.portsInUse = {};
         this.usageData = {};
+        this.dockerTemplate = {};
     }
 };
 __decorate([
@@ -270,6 +271,18 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], Container.prototype, "usageData", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'json',
+        default: null,
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
+], Container.prototype, "dockerTemplate", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], Container.prototype, "protected", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({
         type: 'timestamp',

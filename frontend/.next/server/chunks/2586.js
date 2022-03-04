@@ -104,7 +104,7 @@ function NetworkIndex() {
             return;
         }
         if (!networks || !((ref = networks[activeHost.id]) === null || ref === void 0 ? void 0 : ref.networks)) {
-            console.log('returning networks');
+            // console.log('returning networks');
             return;
         }
         // console.log('Refreshing containers, host list changed');
