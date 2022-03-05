@@ -50,7 +50,7 @@ export declare class DockerService {
     createImage(data: any, hostId?: number): Promise<Observable<any>>;
     removeImage(image: any): Promise<any>;
     listVolumes(body: any): Promise<any>;
-    inspectVolume(volume: any, hostId?: number): Promise<any>;
+    inspectVolume(volume: any): Promise<any>;
     createVolume(data: any): Promise<any>;
     removeVolume(volume: any): Promise<any>;
     listNetworks(body: any): Promise<any>;

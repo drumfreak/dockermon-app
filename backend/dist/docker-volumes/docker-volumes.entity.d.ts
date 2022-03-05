@@ -13,6 +13,7 @@ export declare class DockerVolume {
     virtualSize: number;
     active: boolean;
     protected: boolean;
+    dead: boolean;
     status: string;
     error: string;
     host: DockerHost;

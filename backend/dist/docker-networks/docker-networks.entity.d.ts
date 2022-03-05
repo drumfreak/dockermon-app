@@ -8,6 +8,7 @@ export declare class DockerNetwork {
     details: any;
     usageData: any;
     active: boolean;
+    dead: boolean;
     status: string;
     driver: string;
     protected: boolean;

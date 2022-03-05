@@ -805,48 +805,63 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(image);
             const url = await this.dockerHostService.getUrl(hostId);
-            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/images/' + image.imageId + '/json'));
-            if (!c || !c.data) {
-                return;
-            }
-            const data = await this.dockerImagesService.findOrCreate({
-                imageId: image.imageId,
-                hostId: hostId,
-            });
-            if (data) {
-                image = data;
-                image.details = c.data;
-                image.author = c.data.Author;
-                image.containerDockerId = c.data.Container;
-                image.dockerVersion = c.data.DockerVersion;
-                image.parentImage = c.data.Parent;
-                image.comment = c.data.Comment;
-                image.fileSize = ((_a = c.data) === null || _a === void 0 ? void 0 : _a.Size) ? Number(c.data.Size) : 0;
-                image.virtualSize = ((_b = c.data) === null || _b === void 0 ? void 0 : _b.VirtualSize) ? Number(c.data.VirtualSize) : 0;
-                image.os = c.data.Os;
-                image.architecture = c.data.Architecture;
-                image.host = hostId;
-                if (c.data.RepoTags.length > 0) {
-                    const t = c.data.RepoTags[0].split(':');
-                    if (t.length > 0) {
-                        image.tag = t[1];
-                        image.name = t[0];
+            try {
+                const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/images/' + image.imageId + '/json'));
+                const data = await this.dockerImagesService.findOrCreate({
+                    imageId: image.imageId,
+                    hostId: hostId,
+                });
+                if (data) {
+                    image = data;
+                    image.details = c.data;
+                    image.author = c.data.Author;
+                    image.containerDockerId = c.data.Container;
+                    image.dockerVersion = c.data.DockerVersion;
+                    image.parentImage = c.data.Parent;
+                    image.comment = c.data.Comment;
+                    image.fileSize = ((_a = c.data) === null || _a === void 0 ? void 0 : _a.Size) ? Number(c.data.Size) : 0;
+                    image.virtualSize = ((_b = c.data) === null || _b === void 0 ? void 0 : _b.VirtualSize) ? Number(c.data.VirtualSize) : 0;
+                    image.os = c.data.Os;
+                    image.architecture = c.data.Architecture;
+                    image.host = hostId;
+                    if (c.data.RepoTags.length > 0) {
+                        const t = c.data.RepoTags[0].split(':');
+                        if (t.length > 0) {
+                            image.tag = t[1];
+                            image.name = t[0];
+                        }
+                    }
+                    image.pullTag = c.data.RepoTags.length > 0 ? c.data.RepoTags[0] : image.imageId;
+                    image.createdDate = c.data.Created ? new Date(c.data.Created) : image.createdDate;
+                    image.createdAt = c.data.Created ? new Date(c.data.Created) : image.createdAt;
+                    const sv = await this.dockerImagesService.save(image);
+                    if (sv) {
+                        return sv;
+                    }
+                    else {
+                        return null;
                     }
                 }
-                image.pullTag = c.data.RepoTags.length > 0 ? c.data.RepoTags[0] : image.imageId;
-                image.createdDate = c.data.Created ? new Date(c.data.Created) : image.createdDate;
-                image.createdAt = c.data.Created ? new Date(c.data.Created) : image.createdAt;
-                const sv = await this.dockerImagesService.save(image);
-                if (sv) {
-                    return sv;
-                }
                 else {
-                    return null;
+                    image.details = c.data;
+                    return image;
                 }
             }
-            else {
-                image.details = c.data;
-                return image;
+            catch (error) {
+                image.dead = true;
+                try {
+                    const c1 = await this.dockerImagesService.findOrCreate({
+                        imageId: image.imageId,
+                        hostId: hostId,
+                    });
+                    const c2 = await this.dockerImagesService.save({ id: c1.id, dead: true });
+                    console.log('Marking Image ' + c2.name + ' - ' + c2.imageId + ' as dead ', c2.dead);
+                    return null;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                throw error;
             }
         }
         catch (error) {
@@ -951,37 +966,52 @@ let DockerService = DockerService_1 = class DockerService {
             throw new Error(error.response.data.message);
         }
     }
-    async inspectVolume(volume, hostId = 1) {
+    async inspectVolume(volume) {
         if (!volume) {
             return null;
         }
         try {
             const hostId = this.getHostId(volume);
             const url = await this.dockerHostService.getUrl(hostId);
-            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/volumes/' + volume.volumeId + ''));
-            if (!c || !c.data) {
-                return;
-            }
-            const data = await this.dockerVolumesService.findOrCreate({
-                volumeId: volume.volumeId,
-                hostId: hostId,
-            });
-            if (data) {
-                volume = data;
-                volume.details = c.data;
-                volume.createdDate = c.data.CreatedAt ? new Date(c.data.CreatedAt) : volume.createdAt;
-                volume.createdAt = c.data.CreatedAt ? new Date(c.data.CreatedAt) : volume.createdAt;
-                volume.name = c.data.Name;
-                volume.mountpoint = c.data.Mountpoint;
-                volume.host = hostId;
-                const sv = await this.dockerVolumesService.save(volume);
-                if (sv) {
-                    return sv;
+            try {
+                const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/volumes/' + volume.volumeId + ''));
+                const data = await this.dockerVolumesService.findOrCreate({
+                    volumeId: volume.volumeId,
+                    hostId: hostId,
+                });
+                if (data) {
+                    volume = data;
+                    volume.details = c.data;
+                    volume.createdDate = c.data.CreatedAt ? new Date(c.data.CreatedAt) : volume.createdAt;
+                    volume.createdAt = c.data.CreatedAt ? new Date(c.data.CreatedAt) : volume.createdAt;
+                    volume.name = c.data.Name;
+                    volume.mountpoint = c.data.Mountpoint;
+                    volume.host = hostId;
+                    const sv = await this.dockerVolumesService.save(volume);
+                    if (sv) {
+                        return sv;
+                    }
+                }
+                else {
+                    volume.details = c.data;
+                    return volume;
                 }
             }
-            else {
-                volume.details = c.data;
-                return volume;
+            catch (error) {
+                volume.dead = true;
+                try {
+                    const c1 = await this.dockerVolumesService.findOrCreate({
+                        volumeId: volume.volumeId,
+                        hostId: hostId,
+                    });
+                    const c2 = await this.dockerVolumesService.save({ id: c1.id, dead: true });
+                    console.log('Marking  Volume ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    return null;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                throw error;
             }
         }
         catch (error) {
@@ -1064,38 +1094,53 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(network);
             const url = await this.dockerHostService.getUrl(hostId);
-            const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/networks/' + network.networkId + ''));
-            if (!c || !c.data) {
-                return;
-            }
-            const data = await this.dockerNetworkService.findOrCreate({
-                networkId: network.networkId,
-                hostId: hostId,
-            });
-            if (data) {
-                network = data;
-                network.details = c.data;
-                network.createdDate = c.data.Created ? new Date(c.data.Created) : network.created;
-                network.createdAt = c.data.CreatedAt ? new Date(c.data.CreatedAt) : network.createdAt;
-                network.name = c.data.Name;
-                network.driver = c.data.Driver;
-                network.scope = c.data.Scope;
-                network.host = hostId;
-                network.containers = [];
-                Object.keys((_a = c.data) === null || _a === void 0 ? void 0 : _a.Containers).map(async (containerId) => {
-                    const v = await this.containersService.findOrCreate({ containerId: containerId.substring(0, 12), hostId: hostId });
-                    if (v) {
-                        network.containers.push(v);
-                    }
+            try {
+                const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/networks/' + network.networkId + ''));
+                const data = await this.dockerNetworkService.findOrCreate({
+                    networkId: network.networkId,
+                    hostId: hostId,
                 });
-                const sv = await this.dockerNetworkService.save(network);
-                if (sv) {
-                    return sv;
+                if (data) {
+                    network = data;
+                    network.details = c.data;
+                    network.createdDate = c.data.Created ? new Date(c.data.Created) : network.created;
+                    network.createdAt = c.data.CreatedAt ? new Date(c.data.CreatedAt) : network.createdAt;
+                    network.name = c.data.Name;
+                    network.driver = c.data.Driver;
+                    network.scope = c.data.Scope;
+                    network.host = hostId;
+                    network.containers = [];
+                    Object.keys((_a = c.data) === null || _a === void 0 ? void 0 : _a.Containers).map(async (containerId) => {
+                        const v = await this.containersService.findOrCreate({ containerId: containerId.substring(0, 12), hostId: hostId });
+                        if (v) {
+                            network.containers.push(v);
+                        }
+                    });
+                    const sv = await this.dockerNetworkService.save(network);
+                    if (sv) {
+                        return sv;
+                    }
+                }
+                else {
+                    network.details = c.data;
+                    return network;
                 }
             }
-            else {
-                network.details = c.data;
-                return network;
+            catch (error) {
+                network.dead = true;
+                try {
+                    const c1 = await this.dockerNetworkService.findOrCreate({
+                        networkId: network.networkId,
+                        hostId: hostId,
+                    });
+                    const c2 = await this.dockerNetworkService.save({ id: c1.id, dead: true });
+                    console.log('Marking  Network ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    return null;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                throw error;
             }
         }
         catch (error) {

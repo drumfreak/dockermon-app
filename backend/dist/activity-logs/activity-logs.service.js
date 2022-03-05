@@ -73,7 +73,7 @@ let ActivityLogService = ActivityLogService_1 = class ActivityLogService {
                 take: take,
                 where: where,
                 order: order,
-                relations: ["host"]
+                relations: ['host'],
             });
             return {
                 status: 'success',

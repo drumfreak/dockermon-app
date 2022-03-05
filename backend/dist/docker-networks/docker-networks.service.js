@@ -46,6 +46,7 @@ let DockerNetworksService = DockerNetworksService_1 = class DockerNetworksServic
             if (body.running) {
                 where.running = body.running ? true : false;
             }
+            where.dead = false;
             const take = body.limit || 10;
             const skip = body.skip || 0;
             const order = {};

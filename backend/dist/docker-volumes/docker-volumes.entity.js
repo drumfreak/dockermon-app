@@ -97,6 +97,10 @@ __decorate([
     __metadata("design:type", Boolean)
 ], DockerVolume.prototype, "protected", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], DockerVolume.prototype, "dead", void 0);
+__decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',
         length: 100,
