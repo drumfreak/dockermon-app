@@ -30,7 +30,7 @@ let CronService = CronService_1 = class CronService {
     }
     async statsCron() {
         try {
-            this.logger.log('Running Docker Poller');
+            this.logger.verbose('FIX THIS NOW!!!! --------------------------------------------Running docker poller on old service...');
             const stats = [];
             const output = await this.exec('docker stats --no-stream --format "{{.ID}}\t{{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"');
             await this.containersService.resetContainersRunning();

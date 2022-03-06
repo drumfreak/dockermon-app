@@ -2564,12 +2564,19 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
     const { 0: container1 , 1: setContainer  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const containerRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(container1);
     containerRef.current = container1;
+    const { 0: containerId , 1: setContainerId  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    const containerIdRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(containerId);
+    containerIdRef.current = containerId;
     const opRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
     const { 0: menuItems1 , 1: setMenuItems  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const { 0: socket1 , 1: setSocket  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const socketRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(socket1);
     socketRef.current = socket1;
     const { 0: socketLoaded , 1: setSocketLoaded  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const { 0: launcherSocket1 , 1: setLauncherSocket  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    const launcherSocketRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(launcherSocket1);
+    launcherSocketRef.current = launcherSocket1;
+    const { 0: launcherSocketLoaded , 1: setLauncherSocketLoaded  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useImperativeHandle)(ref7, ()=>({
             async toggleOverlay (element) {
                 toggle(element);
@@ -2581,21 +2588,66 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
     );
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         setContainer(props.container);
+        setContainerId(props.container.id);
         if (!socketLoaded) {
             setTimeout(()=>{
                 loadSocket();
+            }, 500);
+        }
+        if (!launcherSocketLoaded) {
+            setTimeout(async ()=>{
+                await loadLauncherSocket();
             }, 500);
         }
         buildMenuItems(props.container);
     }, [
         props.container
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        // Do unmounting stuff here
+        return ()=>{
+            if (socketRef.current) {
+                // dispatch(selectContainerId({ data: 0 }));
+                const socketName = 'dockerContainerOverlay_' + containerIdRef.current;
+                // console.log('---> container main socket Unloading', socketName);
+                socketRef.current.removeListener(socketName);
+            }
+            if (launcherSocketRef.current) {
+                const socketName = 'dockerLauncherOverlay_' + containerIdRef.current;
+                // console.log('---> container main socket Unloading', socketName);
+                launcherSocketRef.current.removeListener(socketName);
+            }
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     async function loadSocket() {
         if (socketLoaded) return;
         setSocketLoaded(true);
         const socket = await services_socket_service__WEBPACK_IMPORTED_MODULE_7__/* .socketService.getSocket */ .L.getSocket();
         setSocket(socket);
         return socket;
+    }
+    async function loadLauncherSocket() {
+        if (launcherSocketLoaded) return;
+        setLauncherSocketLoaded(true);
+        const socketName = 'dockerLauncherOverlay_' + containerIdRef.current;
+        // console.log('---> container launcher socket loading ' + socketName);
+        const launcherSocket = await services_socket_service__WEBPACK_IMPORTED_MODULE_7__/* .socketService.getLauncherSocket */ .L.getLauncherSocket();
+        launcherSocket.on(socketName, (results)=>{
+            if (results.status === 'success') {
+                if (results.data) {
+                    switch(results.hook){
+                        default:
+                            if (results.data) {
+                            // console.log('results.data', results.data);
+                            }
+                            break;
+                    }
+                }
+            }
+        });
+        setLauncherSocket(launcherSocket);
+        return launcherSocket;
     }
     function buildMenuItems(c) {
         const menuItems = [];
@@ -2763,9 +2815,10 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
     };
     function openLogs() {
         var ref;
-        socketRef.current.emit('tailLogs', {
+        launcherSocketRef.current.emit('tailLogs', {
             command: 'tailLogs',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResulsTerminalLogs_' + containerRef.current.id,
             hook: 'tailLogs'
@@ -2773,9 +2826,10 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
     }
     function openTerminal() {
         var ref;
-        socketRef.current.emit('openTerminal', {
+        launcherSocketRef.current.emit('openTerminal', {
             command: 'openTerminal',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResulsTerminal_' + containerRef.current.id,
             hook: 'openTerminal'
@@ -2786,6 +2840,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'containerExec',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResulsExec_' + containerRef.current.id,
             hook: 'containerExec'
@@ -2796,6 +2851,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'stop',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'stopContainer'
@@ -2806,6 +2862,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'start',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'startContainer'
@@ -2816,6 +2873,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'restart',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'restartContainer'
@@ -2826,6 +2884,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'pause',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'pauseContainer'
@@ -2836,6 +2895,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'unpause',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'resumeContainer'
@@ -2847,6 +2907,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
             const obj = {
                 command: 'inspect',
                 containerId: containerRef.current.containerId,
+                containerLongId: containerRef.current.containerLongId,
                 hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
                 callback: 'dockerResuls_' + containerRef.current.id,
                 hook: 'inspectContainer'
@@ -2859,6 +2920,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'kill',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'killContainer'
@@ -2869,6 +2931,7 @@ const ContainerOverlay = /*#__PURE__*/ (0,react__WEBPACK_IMPORTED_MODULE_1__.for
         socketRef.current.emit('docker', {
             command: 'remove',
             containerId: containerRef.current.containerId,
+            containerLongId: containerRef.current.containerLongId,
             hostId: (ref = containerRef.current.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_' + containerRef.current.id,
             hook: 'removeContainer'
@@ -3360,9 +3423,7 @@ async function loadSocket() {
         socket.emit('dockerEvents', {
             hostId: 1
         });
-        socket.emit('dockerEvents', {
-            hostId: 5
-        });
+    // socket.emit('dockerEvents', { hostId: 2 });
     });
     return socket;
 }

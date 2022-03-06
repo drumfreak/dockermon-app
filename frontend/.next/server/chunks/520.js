@@ -1519,10 +1519,7 @@ function MainDashboardHostSummary(props) {
         if ((ref = volumes[dockerHostRef.current.id]) === null || ref === void 0 ? void 0 : ref.volumes) {
             Object.keys(volumes[dockerHostRef.current.id].volumes).forEach((key)=>{
                 const hVolumes = volumes[dockerHostRef.current.id].volumes[key];
-                Object.keys(hVolumes).forEach((key2)=>{
-                    const volume = hVolumes[key2];
-                    v.push(volume);
-                });
+                v.push(hVolumes);
             });
         }
         setHostVolumes(v);
@@ -1530,10 +1527,7 @@ function MainDashboardHostSummary(props) {
         if ((ref5 = networks[dockerHostRef.current.id]) === null || ref5 === void 0 ? void 0 : ref5.networks) {
             Object.keys(networks[dockerHostRef.current.id].networks).forEach((key)=>{
                 const hNetworks = networks[dockerHostRef.current.id].networks[key];
-                Object.keys(hNetworks).forEach((key2)=>{
-                    const network = hNetworks[key2];
-                    n.push(network);
-                });
+                n.push(hNetworks);
             });
         }
         setHostNetworks(n);

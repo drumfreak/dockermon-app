@@ -30,6 +30,7 @@ if [ $DOCKERMON_ENABLE_SOCAT ]
 then
     if [ -f "/usr/bin/socat" ]
     then
+        echo "Launching socat - aka TACOS"
         /usr/bin/socat TCP-LISTEN:2375,reuseaddr,fork unix-connect:/var/run/docker.sock &
     fi
 fi

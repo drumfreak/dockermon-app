@@ -6,6 +6,7 @@ import { DockerVolume } from 'src/docker-volumes/docker-volumes.entity';
 export declare class Container {
     id: number;
     containerId: string;
+    containerLongId: string;
     project: string;
     name: string;
     dockerImage: string;

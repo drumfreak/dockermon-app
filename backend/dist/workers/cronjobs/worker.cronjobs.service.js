@@ -68,6 +68,9 @@ let WorkerCronjobsService = WorkerCronjobsService_1 = class WorkerCronjobsServic
     }
     async getContainersStats(host) {
         try {
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev' && (host.ipAddress === 'localhost' || host.ipAddress === '127.0.0.1')) {
+                host.ipAddress = process.env.DOCKERMON_WORKER_HOST_ADDRESS;
+            }
             const url = host.connectionType + '://' + host.ipAddress + ':' + host.port;
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/containers/json?all=false'));
             if (c && c.status === 200) {
@@ -84,8 +87,8 @@ let WorkerCronjobsService = WorkerCronjobsService_1 = class WorkerCronjobsServic
     async getContainerStats(host, container) {
         try {
             const saveStats = [];
-            const c = await this.containersService.findOrCreate({ containerId: container.Id.substring(0, 12), hostId: host.id });
-            const c3 = { containerId: container.Id.substring(0, 12), hostId: host.id };
+            const c = await this.containersService.findOrCreate({ containerId: container.Id.substring(0, 12), containerLongId: container.Id, hostId: host.id });
+            const c3 = { containerId: container.Id.substring(0, 12), containerLongId: container.Id, hostId: host.id };
             const stats = await this.dockerService.containerStats(c3, host.id);
             if (stats) {
                 const processStats = this.statsUtility.processStats(stats);
@@ -104,6 +107,16 @@ let WorkerCronjobsService = WorkerCronjobsService_1 = class WorkerCronjobsServic
                     statsData: processStats,
                     hostId: host.id,
                 };
+                try {
+                    const p = await this.dockerService.containerProcesses({ containerId: c.id, containerLongId: container.Id, hostId: host.id });
+                    if (p) {
+                        r.pids = p.Processes.length || 0;
+                        processStats.statsSummary.processes = p.Processes.length || 0;
+                    }
+                }
+                catch (err) {
+                    this.logger.warn('Could not check processes on ', r.containerId);
+                }
                 saveStats.push(r);
                 this.statsService.saveStats(saveStats);
                 c.statsSummary = processStats.statsSummary;

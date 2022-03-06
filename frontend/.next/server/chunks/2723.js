@@ -424,6 +424,7 @@ function ContainerIndex(props) {
         socketRef.current.emit('docker', {
             command: 'remove',
             containerId: container.containerId,
+            containerLongId: container.containerLongId,
             hostId: (ref = container.host) === null || ref === void 0 ? void 0 : ref.id,
             callback: 'dockerResuls_containers' + container.id,
             hook: 'removeContainer'

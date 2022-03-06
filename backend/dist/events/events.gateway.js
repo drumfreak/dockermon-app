@@ -134,7 +134,6 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
             switch (data.command) {
                 default:
                     c = await this.siteDataService.getSiteData();
-                    console.log(c);
                     if (!c) {
                         return;
                     }
@@ -364,8 +363,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerContainerLogs' : data.callback;
                 this.server.to(client.id).emit(emitTo, { status: status, data: rt, message });
             });
+            const containerId = (data.containerLongId) ? data.containerLongId : data.containerId;
             let url = await this.dockerHostService.getUrl(data.hostId);
-            url += '/containers/' + data.containerId + '/logs?stdout=true&stderr=true&since=0&timestamps=false&follow=true&tail=100';
+            url += '/containers/' + containerId + '/logs?stdout=true&stderr=true&since=0&timestamps=false&follow=true&tail=100';
             this.http
                 .get(url, { responseType: 'stream', timeout: 300 })
                 .pipe((0, rxjs_1.map)((res) => res.data.pipe(this.containerLogSockets[client.id].inoutStream)), (0, rxjs_1.takeUntil)(this.containerLogSockets[client.id].stopSignal$))
@@ -429,7 +429,8 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
             return;
         }
         let url = await this.dockerHostService.getUrl(data.hostId);
-        this.containerSockets[client.id] = new WebSocket((url += '/containers/' + data.containerId + '/attach/ws?stdout=true&stdin=true&stderr=true&stream=true&logs=true'));
+        const containerId = (data.containerLongId) ? data.containerLongId : data.containerId;
+        this.containerSockets[client.id] = new WebSocket((url += '/containers/' + containerId + '/attach/ws?stdout=true&stdin=true&stderr=true&stream=true&logs=true'));
         this.containerSockets[client.id].binaryType = 'arraybuffer';
         this.containerSockets[client.id].on('open', () => {
             console.log('Connected to Docker Websocket');
@@ -717,7 +718,7 @@ EventsGateway = EventsGateway_1 = __decorate([
     (0, websockets_1.WebSocketGateway)(3811, {
         cors: true,
         namespace: 'events',
-        timeout: 500000000000000,
+        timeout: 2147483647,
         pingTimeout: 999999999,
     }),
     __param(8, (0, bull_1.InjectQueue)('eventsProcessor')),

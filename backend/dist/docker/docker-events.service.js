@@ -51,6 +51,9 @@ let DockerEventsService = DockerEventsService_1 = class DockerEventsService {
                         callback();
                     },
                 });
+                if (process.env.DOCKERMON_CURRENT_ENV === 'dev' && (host.ipAddress === 'localhost' || host.ipAddress === '127.0.0.1')) {
+                    host.ipAddress = process.env.DOCKERMON_WORKER_HOST_ADDRESS;
+                }
                 const url = host.connectionType + '://' + host.ipAddress + ':' + host.port;
                 const dockerEventObservable = this.http
                     .get(url + '/events', {
@@ -82,7 +85,6 @@ let DockerEventsService = DockerEventsService_1 = class DockerEventsService {
         this.dockerEvents();
     }
     handleEvent(event, hostId) {
-        this.logger.warn('Event');
         switch (event.Type) {
             case 'container':
                 this.handleContainerEvent(event, hostId);
@@ -107,13 +109,17 @@ let DockerEventsService = DockerEventsService_1 = class DockerEventsService {
         }
     }
     async handleContainerEvent(event, hostId) {
-        const container = { containerId: event.Actor.ID.substring(0, 12), hostId: hostId };
+        const container = { containerId: event.Actor.ID.substring(0, 12), containerLongId: event.Actor.ID, hostId: hostId };
         const action = event.Action;
         const excluded = ['top'];
-        console.log('Action', event.Action);
         switch (event.Action) {
             default:
-                this.logger.log('Container Event');
+                if (!excluded.includes(event.Action)) {
+                    this.logger.log('Container Event');
+                }
+                else {
+                    return;
+                }
                 if (event.Action === 'create') {
                     await this.dockerService.dockerUsage(hostId);
                 }

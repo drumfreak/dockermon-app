@@ -38,7 +38,7 @@ let StatsUtility = class StatsUtility {
             const txBytes = ((_q = (_p = stats === null || stats === void 0 ? void 0 : stats.networks) === null || _p === void 0 ? void 0 : _p.eth0) === null || _q === void 0 ? void 0 : _q.tx_bytes) ? (_s = (_r = stats === null || stats === void 0 ? void 0 : stats.networks) === null || _r === void 0 ? void 0 : _r.eth0) === null || _s === void 0 ? void 0 : _s.tx_bytes : 0;
             statsData.networkRx = rxBytes;
             statsData.networkTx = txBytes;
-            const processes = (_t = stats === null || stats === void 0 ? void 0 : stats.pids_stats) === null || _t === void 0 ? void 0 : _t.current;
+            const processes = ((_t = stats === null || stats === void 0 ? void 0 : stats.pids_stats) === null || _t === void 0 ? void 0 : _t.current) || 0;
             statsData.processes = processes;
             statsSummary.cpuUsage = cpuUsage || 0;
             statsSummary.memoryUsage = memoryUsage || 0;
