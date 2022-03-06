@@ -38,9 +38,6 @@ let DockerHostsService = DockerHostsService_1 = class DockerHostsService {
     async getUrl(id) {
         const f = await this.hostRepository.createQueryBuilder('hosts').where({ id: id }).getOne();
         if (f) {
-            if (f.ipAddress === 'localhost' || f.ipAddress === '127.0.0.1') {
-                f.ipAddress = process.env.DOCKERMON_WORKER_HOST_ADDRESS;
-            }
             return f.connectionType + '://' + f.ipAddress + ':' + f.port;
         }
     }

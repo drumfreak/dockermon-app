@@ -51,9 +51,6 @@ let DockerEventsService = DockerEventsService_1 = class DockerEventsService {
                         callback();
                     },
                 });
-                if (host.ipAddress === 'localhost' || host.ipAddress === '127.0.0.1') {
-                    host.ipAddress = process.env.DOCKERMON_WORKER_HOST_ADDRESS;
-                }
                 const url = host.connectionType + '://' + host.ipAddress + ':' + host.port;
                 const dockerEventObservable = this.http
                     .get(url + '/events', {
