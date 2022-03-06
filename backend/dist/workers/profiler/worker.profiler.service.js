@@ -26,15 +26,13 @@ const profiling_service_1 = require("../../profiling/profiling.service");
 const docker_hosts_service_1 = require("../../docker-hosts/docker-hosts.service");
 const stats_util_1 = require("../../utility/stats.util");
 const stats_service_1 = require("../../stats/stats.service");
-const docker_service_1 = require("../../docker/docker.service");
 let WorkerProfilerService = WorkerProfilerService_1 = class WorkerProfilerService {
-    constructor(http, socketClientService, containersService, profilerService, dockerHostService, dockerService, statsUtility, statsService) {
+    constructor(http, socketClientService, containersService, profilerService, dockerHostService, statsUtility, statsService) {
         this.http = http;
         this.socketClientService = socketClientService;
         this.containersService = containersService;
         this.profilerService = profilerService;
         this.dockerHostService = dockerHostService;
-        this.dockerService = dockerService;
         this.statsUtility = statsUtility;
         this.statsService = statsService;
         this.logger = new common_1.Logger(WorkerProfilerService_1.name);
@@ -110,16 +108,6 @@ let WorkerProfilerService = WorkerProfilerService_1 = class WorkerProfilerServic
                         return;
                     const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'containerMonitor' : data.callback;
                     const stats = await this.statsUtility.processStats(rt);
-                    try {
-                        const p = await this.dockerService.containerProcesses({ containerId: data.containerId, containerLongId: data.containerLongId, hostId: data.hostId });
-                        if (p) {
-                            stats.statsData.processes = p.Processes.length || 0;
-                            stats.statsSummary.processes = p.Processes.length || 0;
-                        }
-                    }
-                    catch (err) {
-                        this.logger.warn('Could not check processes on ', data.cid);
-                    }
                     saveGroup.push(stats);
                     if (!((_a = this.containerMonitorSockets[clientId]) === null || _a === void 0 ? void 0 : _a.collection))
                         return;
@@ -258,7 +246,6 @@ WorkerProfilerService = WorkerProfilerService_1 = __decorate([
         containers_service_1.ContainersService,
         profiling_service_1.ProfilingService,
         docker_hosts_service_1.DockerHostsService,
-        docker_service_1.DockerService,
         stats_util_1.StatsUtility,
         stats_service_1.StatsService])
 ], WorkerProfilerService);

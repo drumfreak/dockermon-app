@@ -34,11 +34,6 @@ const docker_hosts_entity_1 = require("../../docker-hosts/docker-hosts.entity");
 const stats_util_1 = require("../../utility/stats.util");
 const stats_service_1 = require("../../stats/stats.service");
 const activity_logs_entity_1 = require("../../activity-logs/activity-logs.entity");
-const docker_service_1 = require("../../docker/docker.service");
-const docker_module_1 = require("../../docker/docker.module");
-const docker_images_module_1 = require("../../docker-images/docker-images.module");
-const docker_volumes_module_1 = require("../../docker-volumes/docker-volumes.module");
-const docker_networks_module_1 = require("../../docker-networks/docker-networks.module");
 const typeORMLogging = process.env.TYPEORM_LOGGING === 'false' ? false : false;
 const typeORMMigrations = process.env.TYPEORM_MIGRATIONS === 'false' ? false : false;
 let WorkerProfilerModule = class WorkerProfilerModule {
@@ -81,10 +76,6 @@ WorkerProfilerModule = __decorate([
                 maxRedirects: 5,
             }),
             docker_hosts_module_1.DockerHostsModule,
-            docker_module_1.DockerModule,
-            docker_images_module_1.DockerImagesModule,
-            docker_volumes_module_1.DockerVolumesModule,
-            docker_networks_module_1.DockerNetworksModule,
             containers_module_1.ContainersModule,
             profiling_module_1.ProfilingModule,
         ],
@@ -92,7 +83,6 @@ WorkerProfilerModule = __decorate([
         providers: [
             app_service_1.AppService,
             stats_util_1.StatsUtility,
-            docker_service_1.DockerService,
             worker_profiler_processor_1.WorkerProfilerProcessor,
             worker_profiler_service_1.WorkerProfilerService,
             workers_socket_io_client_proxy_service_1.WorkersSocketIoClientProxyService,
