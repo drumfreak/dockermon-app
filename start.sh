@@ -25,6 +25,15 @@ then
     sleep 5
 fi
 
+
+if [ $DOCKERMON_ENABLE_SOCAT ]
+then
+    if [ -f "/usr/bin/socat" ]
+    then
+        /usr/bin/socat TCP-LISTEN:2375,reuseaddr,fork unix-connect:/var/run/docker.sock &
+    fi
+fi
+
 if [ $DOCKERMON_ENABLE_GIT_UPDATE ]
 then
     cd /app
