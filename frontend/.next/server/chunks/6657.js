@@ -360,7 +360,9 @@ const defaults = {
                     showFiles: false,
                     showProfiler: false,
                     showEditName: false,
-                    showEditResources: false
+                    showEditResources: false,
+                    showEnvVars: true,
+                    showImage: false
                 }
             }, 
         ]

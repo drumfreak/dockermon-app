@@ -779,6 +779,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([reac
 
 
 function DockerImageView(props) {
+    var ref;
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     const { 0: isLoading , 1: setIsLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(true);
     const isLoadingRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(isLoading);
@@ -793,6 +794,9 @@ function DockerImageView(props) {
     const { 0: image , 1: setImage  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)();
     const imageRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(image);
     imageRef.current = image;
+    const { 0: localImage , 1: setLocalImage  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)();
+    const localImageRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(localImage);
+    localImageRef.current = localImage;
     const { 0: imageId , 1: setImageId  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)();
     const imageIdRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(imageId);
     imageIdRef.current = imageId;
@@ -812,9 +816,11 @@ function DockerImageView(props) {
     (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(async ()=>{
         if (router.query.name) {
             setImageId(router.query.name);
+            updateLocalImage();
         }
         if (props.imageName) {
             setImageId(props.imageName);
+            updateLocalImage();
         }
         if (props.showTags === false) {
             setShowTags(false);
@@ -849,6 +855,7 @@ function DockerImageView(props) {
         const socketName = 'image_details_' + imageIdRef.current;
         const socket = await _services_socket_service__WEBPACK_IMPORTED_MODULE_7__/* .socketService.getSocket */ .L.getSocket();
         socket.on(socketName, (results)=>{
+            console.log('Image', results.data);
             if (results.status === 'success') {
                 if (results.data) {
                     setImage(results.data);
@@ -873,6 +880,14 @@ function DockerImageView(props) {
             });
         } else {
             setIsLoading(false);
+        }
+    }
+    function updateLocalImage() {
+        if (!props.image) {
+        // Get from state
+        }
+        if (props.image) {
+            setLocalImage(props.image);
         }
     }
     // const confirm = (action, title) => {
@@ -1020,9 +1035,20 @@ function DockerImageView(props) {
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     className: "card flex",
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "col-10",
-                            children: image.description
+                            children: [
+                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
+                                    children: [
+                                        (ref = localImageRef.current) === null || ref === void 0 ? void 0 : ref.name,
+                                        ":",
+                                        localImageRef.current.tag
+                                    ]
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                                    children: image.description
+                                })
+                            ]
                         }),
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "col-2 text-right p-0 m-0",
