@@ -169,7 +169,13 @@ function VolumeIndex(props) {
             if (results.status === 'success') {
                 if (results.data) {
                     const data = results.data;
-                    setItems(data);
+                    const d = data.sort((a, b)=>{
+                        if (!a.name) {
+                            a.name = a.volumeId;
+                        }
+                        return a.name.localeCompare(b.name);
+                    });
+                    setItems(d);
                 }
             }
         });
@@ -350,11 +356,12 @@ function VolumeIndex(props) {
     };
     // if (items?.length === 0) return <Spinner />;
     // const nitems = (itemsRef.current?.length > 0) ? itemsRef.current.slice(0, 100) : [];
-    return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+    return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "col-12 p-0 m-0",
             children: [
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "col-12 p-0 mt-2 pr-1 grid",
+                    className: "col-12 p-0 m-0 pr-1 grid",
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: "col-6",

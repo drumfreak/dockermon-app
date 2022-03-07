@@ -11,6 +11,7 @@ import { HttpService } from '@nestjs/axios';
 import { Job, Queue } from 'bull';
 import { DockerHostsService } from 'src/docker-hosts/docker-hosts.service';
 import { SiteDataService } from 'src/docker/site-data.service';
+import 'dotenv/config';
 export declare class EventsGateway implements OnGatewayConnection, OnGatewayConnection, OnGatewayDisconnect {
     private readonly containerService;
     private readonly dockerImageService;

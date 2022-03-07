@@ -32,6 +32,7 @@ const bull_1 = require("@nestjs/bull");
 const docker_hosts_service_1 = require("../docker-hosts/docker-hosts.service");
 const site_data_service_1 = require("../docker/site-data.service");
 const events_guard_1 = require("./events.guard");
+require("dotenv/config");
 let EventsGateway = EventsGateway_1 = class EventsGateway {
     constructor(containerService, dockerImageService, statsService, dockerService, dockerHubService, http, dockerHostService, siteDataService, eventsQueue) {
         this.containerService = containerService;
@@ -57,7 +58,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         this.server.emit('dockerEventsReceiver', data);
     }
     async pingReceiver(data, client) {
-        this.logger.log('------> Ping <------ ', ' Hello ', client.id);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('------> Ping <------ ', ' Hello ', client.id);
+        }
     }
     async getContainers(data, client) {
         const c = await this.containerService.getContainers(data);
@@ -66,7 +69,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         return c;
     }
     async hostsList(data, client) {
-        this.logger.log('Get Hosts List', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('Get Hosts List', data);
+        }
         let results;
         let c;
         let emitTo;
@@ -75,6 +80,22 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 default:
                     if (data.command === 'createHost') {
                         const b = await this.dockerHostService.save(data.data);
+                        if (b)
+                            c = { data: b };
+                    }
+                    else if (data.command === 'editHost') {
+                        const host = await this.dockerHostService.getHostById(data.data.id);
+                        if (!host) {
+                            throw new Error('Host not found');
+                        }
+                        host.name = data.data.name;
+                        host.ipAddress = data.data.ipAddress;
+                        host.active = data.data.active;
+                        host.port = data.data.port;
+                        host.connectionType = data.data.connectionType;
+                        host.protected = data.data.protected;
+                        host.windowsHost = data.data.windowsHost;
+                        const b = await this.dockerHostService.save(host);
                         if (b)
                             c = { data: b };
                     }
@@ -126,7 +147,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         }
     }
     async siteData(data, client) {
-        this.logger.log('Get Site Data List', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('Get Site Data List', data);
+        }
         let results;
         let c;
         let emitTo;
@@ -155,7 +178,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
     }
     async dockerCommand(data, client) {
         var _a, _b;
-        this.logger.log('Docker Command', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('Docker Command', data);
+        }
         let results;
         let c;
         let c2;
@@ -227,7 +252,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         }
     }
     async dockerPullImage(data, client) {
-        this.logger.log('Docker pullImage', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('Docker pullImage', data);
+        }
         const inoutStream = new stream_1.Transform({
             transform(chunk, encoding, callback) {
                 this.push(chunk);
@@ -266,7 +293,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerResults' : data.callback;
         const hostId = data.hostId;
         try {
-            this.logger.log('Docker createImage', data);
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                this.logger.log('Docker createImage', data);
+            }
             const inoutStream = new stream_1.Transform({
                 transform(chunk, encoding, callback) {
                     this.push(chunk);
@@ -313,7 +342,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
     async dockerCreateVolume(data, client) {
         const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerResults' : data.callback;
         try {
-            this.logger.log('Docker createVolume', data);
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                this.logger.log('Docker createVolume', data);
+            }
             const c = await this.dockerService.createVolume(data);
             this.server.to(client.id).emit(emitTo, { status: 'success', hook: data.hook, callback: data.callback, data: c });
         }
@@ -327,7 +358,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
     async dockerCreateContainer(data, client) {
         let emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerResults' : data.callback;
         try {
-            this.logger.log('Docker CreateContainer', data);
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                this.logger.log('Docker CreateContainer', data);
+            }
             const c = await this.dockerService.handleData(data);
             const results = { status: 'success', data: c };
             if (data.hook) {
@@ -344,7 +377,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         }
     }
     async dockerContainerLogs(data, client) {
-        this.logger.log('Docker Container Logs', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('Docker Container Logs', data);
+        }
         this.containerLogSockets[client.id] = {};
         this.containerLogSockets[client.id].stopSignal$ = new rxjs_1.Subject();
         this.containerLogSockets[client.id].inoutStream = new stream_1.Transform({
@@ -363,7 +398,7 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
                 const emitTo = !(data === null || data === void 0 ? void 0 : data.callback) ? 'dockerContainerLogs' : data.callback;
                 this.server.to(client.id).emit(emitTo, { status: status, data: rt, message });
             });
-            const containerId = (data.containerLongId) ? data.containerLongId : data.containerId;
+            const containerId = data.containerLongId ? data.containerLongId : data.containerId;
             let url = await this.dockerHostService.getUrl(data.hostId);
             url += '/containers/' + containerId + '/logs?stdout=true&stderr=true&since=0&timestamps=false&follow=true&tail=100';
             this.http
@@ -393,7 +428,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         return jobs3;
     }
     async dockerContainerMonitor(data, client) {
-        this.logger.debug('Docker Container Monitor', data);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.debug('Docker Container Monitor', data);
+        }
         try {
             data.clientId = client.id;
             await this.cleanJobs(client.id);
@@ -416,7 +453,9 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
     async dockerAttachCommand(data, client) {
         if (data.action === 'close') {
             if (this.containerSockets[client.id]) {
-                console.log('Closing Connection');
+                if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                    console.log('Closing Connection');
+                }
                 this.containerSockets[client.id].close();
                 delete this.containerSockets[client.id];
             }
@@ -429,11 +468,13 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
             return;
         }
         let url = await this.dockerHostService.getUrl(data.hostId);
-        const containerId = (data.containerLongId) ? data.containerLongId : data.containerId;
+        const containerId = data.containerLongId ? data.containerLongId : data.containerId;
         this.containerSockets[client.id] = new WebSocket((url += '/containers/' + containerId + '/attach/ws?stdout=true&stdin=true&stderr=true&stream=true&logs=true'));
         this.containerSockets[client.id].binaryType = 'arraybuffer';
         this.containerSockets[client.id].on('open', () => {
-            console.log('Connected to Docker Websocket');
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                console.log('Connected to Docker Websocket');
+            }
             this.containerSockets[client.id].send('ps aux\n');
         });
         this.containerSockets[client.id].on('message', function (message) {
@@ -511,14 +552,18 @@ let EventsGateway = EventsGateway_1 = class EventsGateway {
         try {
             if (req) {
             }
-            this.logger.log(`Client connected: ${client.id}`);
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                this.logger.log(`Client connected: ${client.id}`);
+            }
         }
         catch (error) {
             console.log('error', error);
         }
     }
     handleDisconnect(client) {
-        console.log('------> See ya ', client.id);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            console.log('------> See ya ', client.id);
+        }
         this.cleanJobs(client.id);
     }
 };

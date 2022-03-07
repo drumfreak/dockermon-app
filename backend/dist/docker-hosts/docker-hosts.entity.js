@@ -143,6 +143,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
+], DockerHost.prototype, "windowsHost", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
 ], DockerHost.prototype, "protected", void 0);
 __decorate([
     (0, typeorm_1.Column)({

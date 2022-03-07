@@ -22,6 +22,7 @@ const docker_volumes_service_1 = require("../docker-volumes/docker-volumes.servi
 const stream_1 = require("stream");
 const docker_networks_service_1 = require("../docker-networks/docker-networks.service");
 const docker_hosts_service_1 = require("../docker-hosts/docker-hosts.service");
+require("dotenv/config");
 let DockerService = DockerService_1 = class DockerService {
     constructor(http, containersService, dockerImagesService, dockerVolumesService, dockerNetworkService, dockerHostService) {
         this.http = http;
@@ -112,7 +113,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async dockerInfo(host = 1) {
-        this.logger.verbose('running dockerInfo on hostId: ' + host);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.verbose('running dockerInfo on hostId: ' + host);
+        }
         const url = await this.dockerHostService.getUrl(host);
         try {
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/info'));
@@ -131,7 +134,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async dockerPing(host = 1) {
-        this.logger.verbose('running dockerPing on hostId: ' + host);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.verbose('running dockerPing on hostId: ' + host);
+        }
         const url = await this.dockerHostService.getUrl(host);
         try {
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/_ping'));
@@ -150,7 +155,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async dockerVersion(host = 1) {
-        this.logger.verbose('running dockerVersion on hostId: ' + host);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.verbose('running dockerVersion on hostId: ' + host);
+        }
         const url = await this.dockerHostService.getUrl(host);
         try {
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/version'));
@@ -169,7 +176,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async dockerUsage(host = 1) {
-        this.logger.verbose('running dockerUsage on hostId: ' + host);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.verbose('running dockerUsage on hostId: ' + host);
+        }
         const url = await this.dockerHostService.getUrl(host);
         try {
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/system/df'));
@@ -283,10 +292,12 @@ let DockerService = DockerService_1 = class DockerService {
             return null;
         }
         if (broadcast) {
-            console.log('Broadcast');
+            if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                console.log('Broadcast');
+            }
         }
         try {
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
             let c;
@@ -302,7 +313,9 @@ let DockerService = DockerService_1 = class DockerService {
                         hostId: hostId,
                     });
                     const c2 = await this.containersService.save({ id: c1.id, dead: true });
-                    console.log('Marking ' + c2.name + ' - ' + c2.containerId + ' as dead ', c2.dead);
+                    if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                        console.log('Marking ' + c2.name + ' - ' + c2.containerId + ' as dead ', c2.dead);
+                    }
                     return c2;
                 }
                 catch (err) {
@@ -403,7 +416,7 @@ let DockerService = DockerService_1 = class DockerService {
                 stopSignal$.next(input);
             };
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/containers/' + containerId + '/stats?stream=false&one-shot=false ', {
                 responseType: 'stream',
                 timeout: 300000000,
@@ -437,7 +450,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/pause'));
             const c = await this.inspectContainer(container);
             return c;
@@ -462,7 +475,7 @@ let DockerService = DockerService_1 = class DockerService {
                 Cmd: container.execCommand.split(' '),
                 Privileged: true,
             };
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const b = await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/exec', body));
             setTimeout(async () => {
                 try {
@@ -486,7 +499,7 @@ let DockerService = DockerService_1 = class DockerService {
         }
         try {
             const url = await this.dockerHostService.getUrl(container.hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/containers/' + containerId + '/top?ps_args=aux'));
             if (c && c.status === 200) {
                 const processDate = new Date();
@@ -499,7 +512,11 @@ let DockerService = DockerService_1 = class DockerService {
                         c1 = await this.containersService.getContainerById(container.cid);
                     }
                     else if (container.containerId) {
-                        c1 = await this.containersService.findOrCreate({ hostId: container.hostId, containerId: container.containerId, containerLongId: container.containerLongId });
+                        c1 = await this.containersService.findOrCreate({
+                            hostId: container.hostId,
+                            containerId: container.containerId,
+                            containerLongId: container.containerLongId,
+                        });
                     }
                     if (c1) {
                         const procs = c.data.Processes.map((p) => {
@@ -530,7 +547,7 @@ let DockerService = DockerService_1 = class DockerService {
         }
         try {
             const url = await this.dockerHostService.getUrl(container.hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const c = await (0, rxjs_1.firstValueFrom)(this.http.get(url + '/containers/' + containerId + '/changes'));
             if (c && c.status === 200) {
                 const processDate = new Date();
@@ -543,7 +560,11 @@ let DockerService = DockerService_1 = class DockerService {
                         c1 = await this.containersService.getContainerById(container.cid);
                     }
                     else if (container.containerId) {
-                        c1 = await this.containersService.findOrCreate({ hostId: container.hostId, containerId: container.containerId, containerLongId: container.containerLongId });
+                        c1 = await this.containersService.findOrCreate({
+                            hostId: container.hostId,
+                            containerId: container.containerId,
+                            containerLongId: container.containerLongId,
+                        });
                     }
                     if (c1) {
                     }
@@ -567,7 +588,7 @@ let DockerService = DockerService_1 = class DockerService {
             const body = {
                 name: container.name.trim(),
             };
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             try {
                 await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/rename?name=' + body.name));
             }
@@ -590,7 +611,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const body = container.data;
             try {
                 await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/update', body));
@@ -614,7 +635,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/unpause'));
             const c = await this.inspectContainer(container);
             return c;
@@ -631,7 +652,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/stop'));
             const c = await this.inspectContainer(container);
             return c;
@@ -648,7 +669,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/start'));
             const c = await this.inspectContainer(container);
             return c;
@@ -664,7 +685,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/restart'));
             const c = await this.inspectContainer(container);
             return c;
@@ -675,7 +696,9 @@ let DockerService = DockerService_1 = class DockerService {
     }
     async createContainer(container, hostId = 1) {
         var _a;
-        console.log('createContainer', container);
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            console.log('createContainer', container);
+        }
         if (!container) {
             return null;
         }
@@ -710,7 +733,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const f = await (0, rxjs_1.firstValueFrom)(this.http.post(url + '/containers/' + containerId + '/kill'));
             if (f.status === 204) {
                 const c = await this.inspectContainer(container);
@@ -732,7 +755,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(container);
             const url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (container.containerLongId) ? container.containerLongId : container.containerId;
+            const containerId = container.containerLongId ? container.containerLongId : container.containerId;
             const f = await (0, rxjs_1.firstValueFrom)(this.http.delete(url + '/containers/' + containerId));
             if (f.status === 204 || f.status === 404 || f.status === 200) {
                 await this.containersService.removeContainer({
@@ -753,7 +776,9 @@ let DockerService = DockerService_1 = class DockerService {
         }
     }
     async listContainers(body) {
-        this.logger.log('listContainers');
+        if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+            this.logger.log('listContainers');
+        }
         try {
             const listAll = body.all ? body.all : true;
             const hostId = this.getHostId(body);
@@ -780,7 +805,7 @@ let DockerService = DockerService_1 = class DockerService {
         try {
             const hostId = this.getHostId(body);
             let url = await this.dockerHostService.getUrl(hostId);
-            const containerId = (body.containerLongId) ? body.containerLongId : body.containerId;
+            const containerId = body.containerLongId ? body.containerLongId : body.containerId;
             url += '/containers/' + containerId + '/logs?stdout=true&stderr=true&since=0&timestamps=false&follow=true&tail=100';
             return this.http.get(url, {
                 responseType: 'stream',
@@ -874,7 +899,9 @@ let DockerService = DockerService_1 = class DockerService {
                         hostId: hostId,
                     });
                     const c2 = await this.dockerImagesService.save({ id: c1.id, dead: true });
-                    console.log('Marking Image ' + c2.name + ' - ' + c2.imageId + ' as dead ', c2.dead);
+                    if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                        console.log('Marking Image ' + c2.name + ' - ' + c2.imageId + ' as dead ', c2.dead);
+                    }
                     return null;
                 }
                 catch (err) {
@@ -1024,7 +1051,9 @@ let DockerService = DockerService_1 = class DockerService {
                         hostId: hostId,
                     });
                     const c2 = await this.dockerVolumesService.save({ id: c1.id, dead: true });
-                    console.log('Marking  Volume ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                        console.log('Marking  Volume ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    }
                     return null;
                 }
                 catch (err) {
@@ -1130,7 +1159,11 @@ let DockerService = DockerService_1 = class DockerService {
                     network.host = hostId;
                     network.containers = [];
                     Object.keys((_a = c.data) === null || _a === void 0 ? void 0 : _a.Containers).map(async (containerId) => {
-                        const v = await this.containersService.findOrCreate({ containerId: containerId.substring(0, 12), containerLongId: containerId, hostId: hostId });
+                        const v = await this.containersService.findOrCreate({
+                            containerId: containerId.substring(0, 12),
+                            containerLongId: containerId,
+                            hostId: hostId,
+                        });
                         if (v) {
                             network.containers.push(v);
                         }
@@ -1153,7 +1186,9 @@ let DockerService = DockerService_1 = class DockerService {
                         hostId: hostId,
                     });
                     const c2 = await this.dockerNetworkService.save({ id: c1.id, dead: true });
-                    console.log('Marking  Network ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    if (process.env.DOCKERMON_CURRENT_ENV === 'dev') {
+                        console.log('Marking  Network ' + c2.name + ' - ' + c2.volumeId + ' as dead ', c2.dead);
+                    }
                     return null;
                 }
                 catch (err) {

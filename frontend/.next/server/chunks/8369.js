@@ -270,8 +270,9 @@ function DockerImageTags(props) {
         });
     }
     async function processLocalImages() {
-        const data = Object.keys(localImagesObject).map((key)=>localImagesObject[key]
+        const data = Object.keys(localImagesObject[activeHostRef.current.id].images).map((key)=>localImagesObject[activeHostRef.current.id].images[key]
         );
+        // console.log('Images', data);
         setLocalImages(data);
     }
     async function prepareData(data) {
@@ -779,7 +780,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([reac
 
 
 function DockerImageView(props) {
-    var ref;
+    var ref, ref1, ref2;
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     const { 0: isLoading , 1: setIsLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(true);
     const isLoadingRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(isLoading);
@@ -855,7 +856,7 @@ function DockerImageView(props) {
         const socketName = 'image_details_' + imageIdRef.current;
         const socket = await _services_socket_service__WEBPACK_IMPORTED_MODULE_7__/* .socketService.getSocket */ .L.getSocket();
         socket.on(socketName, (results)=>{
-            console.log('Image', results.data);
+            // console.log('Image', results.data);
             if (results.status === 'success') {
                 if (results.data) {
                     setImage(results.data);
@@ -913,7 +914,7 @@ function DockerImageView(props) {
     }));
     return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "col-12 p-0",
+            className: "col-12 p-0 m-0",
             children: [
                 !props.showPreview && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                     children: [
@@ -1038,9 +1039,12 @@ function DockerImageView(props) {
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "col-10",
                             children: [
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h5", {
+                                    children: "Docker Hub"
+                                }),
+                                ((ref = localImageRef.current) === null || ref === void 0 ? void 0 : ref.name) && ((ref1 = localImageRef.current) === null || ref1 === void 0 ? void 0 : ref1.tag) && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
                                     children: [
-                                        (ref = localImageRef.current) === null || ref === void 0 ? void 0 : ref.name,
+                                        (ref2 = localImageRef.current) === null || ref2 === void 0 ? void 0 : ref2.name,
                                         ":",
                                         localImageRef.current.tag
                                     ]

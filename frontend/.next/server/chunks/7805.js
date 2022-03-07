@@ -574,156 +574,155 @@ function ActivityLogIndex(props) {
             }));
         }
     };
-    return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "col-12 p-0 mt-2 pr-1 grid",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "col-6",
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__.FontAwesomeIcon, {
-                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faList12,
-                                        pull: "left",
-                                        className: "fa-1x lightblue-color mt-0 pt-0",
-                                        swapOpacity: true
-                                    }),
-                                    "Activity Logs"
-                                ]
-                            })
-                        }),
-                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                            className: "col-6 text-right pr-0",
+    return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "col-12 p-0 m-0",
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "col-12 p-0 m-0 pr-1 grid",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "col-6",
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
                             children: [
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                    className: "p-input-icon-left mr-3",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
-                                            className: "pi pi-search"
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__.InputText, {
-                                            value: globalFilterValue1,
-                                            onChange: onGlobalFilterChange1,
-                                            placeholder: "Keyword Search"
-                                        })
-                                    ]
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__.FontAwesomeIcon, {
+                                    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faList12,
+                                    pull: "left",
+                                    className: "fa-1x lightblue-color mt-0 pt-0",
+                                    swapOpacity: true
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
-                                    className: "p-button p-component p-button-secondary mt-1 p-2",
-                                    label: "",
-                                    onClick: ()=>loadData()
-                                    ,
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__.FontAwesomeIcon, {
-                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faArrowRotateRight,
-                                        className: "mt-0 p-1",
-                                        swapOpacity: true
-                                    })
-                                })
+                                "Activity Logs"
                             ]
                         })
-                    ]
-                }),
-                showTimeline && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "col-12",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h6", {
-                            children: "Timeline"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_timeline__WEBPACK_IMPORTED_MODULE_15__.Timeline, {
-                            value: timelineItems,
-                            layout: "vertical",
-                            align: "top",
-                            content: (item)=>item.status + ' ' + item.date
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_datatable__WEBPACK_IMPORTED_MODULE_13__.DataTable, {
-                    value: items,
-                    stripedRows: true,
-                    rowHover: true,
-                    showGridlines: true,
-                    // selection={selectedRows}
-                    // onSelectionChange={(e) => selectRows(e)}
-                    // paginator
-                    rows: tableRows,
-                    totalRecords: items === null || items === void 0 ? void 0 : items.length,
-                    dataKey: "id",
-                    sortMode: "single",
-                    // responsiveLayout="scroll"
-                    sortField: sortField,
-                    sortOrder: tableSortOrder,
-                    // filters={filters1}
-                    // filterDisplay="menu"
-                    // loading={isLoadingRef.current}
-                    loading: tableIsLoading,
-                    // responsiveLayout="scroll"
-                    globalFilterFields: [
-                        'name',
-                        'contentId',
-                        'action'
-                    ],
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            style: {
-                                width: '220px'
-                            },
-                            field: "updatedAt",
-                            header: "Date",
-                            body: dateTemplate
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            style: {
-                                width: '220px'
-                            },
-                            field: "host.name",
-                            body: hostTemplate,
-                            header: "Host"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            style: {
-                                width: '150px'
-                            },
-                            field: "contentType",
-                            header: "Type",
-                            align: "left"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            field: "contentName",
-                            body: nameTemplate,
-                            header: "Name",
-                            align: "left"
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
-                            style: {
-                                width: '320px'
-                            },
-                            field: "action",
-                            body: actionTemplate,
-                            header: "action",
-                            align: "center"
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__.Paginator, {
-                    template: template1,
-                    first: tableFirst,
-                    rows: tableRows,
-                    totalRecords: totalRecords,
-                    onPageChange: handlePageChange
-                }),
-                (selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.length) > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: "col-12 text-right pr-2",
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
-                        className: "mt-2 p-button-warning",
-                        label: "Remove Selected",
-                        icon: "fa fa-trash",
-                        onClick: (e)=>confirm('removeSelected', null, 'Remove Selected Activity Logs?', e)
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "col-6 text-right pr-0",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                className: "p-input-icon-left mr-3",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                                        className: "pi pi-search"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_12__.InputText, {
+                                        value: globalFilterValue1,
+                                        onChange: onGlobalFilterChange1,
+                                        placeholder: "Keyword Search"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                className: "p-button p-component p-button-secondary mt-1 p-2",
+                                label: "",
+                                onClick: ()=>loadData()
+                                ,
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_11__.FontAwesomeIcon, {
+                                    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faArrowRotateRight,
+                                    className: "mt-0 p-1",
+                                    swapOpacity: true
+                                })
+                            })
+                        ]
                     })
+                ]
+            }),
+            showTimeline && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "col-12",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h6", {
+                        children: "Timeline"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_timeline__WEBPACK_IMPORTED_MODULE_15__.Timeline, {
+                        value: timelineItems,
+                        layout: "vertical",
+                        align: "top",
+                        content: (item)=>item.status + ' ' + item.date
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_datatable__WEBPACK_IMPORTED_MODULE_13__.DataTable, {
+                value: items,
+                stripedRows: true,
+                rowHover: true,
+                showGridlines: true,
+                // selection={selectedRows}
+                // onSelectionChange={(e) => selectRows(e)}
+                // paginator
+                rows: tableRows,
+                totalRecords: items === null || items === void 0 ? void 0 : items.length,
+                dataKey: "id",
+                sortMode: "single",
+                // responsiveLayout="scroll"
+                sortField: sortField,
+                sortOrder: tableSortOrder,
+                // filters={filters1}
+                // filterDisplay="menu"
+                // loading={isLoadingRef.current}
+                loading: tableIsLoading,
+                // responsiveLayout="scroll"
+                globalFilterFields: [
+                    'name',
+                    'contentId',
+                    'action'
+                ],
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                        style: {
+                            width: '220px'
+                        },
+                        field: "updatedAt",
+                        header: "Date",
+                        body: dateTemplate
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                        style: {
+                            width: '220px'
+                        },
+                        field: "host.name",
+                        body: hostTemplate,
+                        header: "Host"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                        style: {
+                            width: '150px'
+                        },
+                        field: "contentType",
+                        header: "Type",
+                        align: "left"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                        field: "contentName",
+                        body: nameTemplate,
+                        header: "Name",
+                        align: "left"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_14__.Column, {
+                        style: {
+                            width: '320px'
+                        },
+                        field: "action",
+                        body: actionTemplate,
+                        header: "action",
+                        align: "center"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_paginator__WEBPACK_IMPORTED_MODULE_16__.Paginator, {
+                template: template1,
+                first: tableFirst,
+                rows: tableRows,
+                totalRecords: totalRecords,
+                onPageChange: handlePageChange
+            }),
+            (selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.length) > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "col-12 text-right pr-2",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                    className: "mt-2 p-button-warning",
+                    label: "Remove Selected",
+                    icon: "fa fa-trash",
+                    onClick: (e)=>confirm('removeSelected', null, 'Remove Selected Activity Logs?', e)
                 })
-            ]
-        })
+            })
+        ]
     }));
 };
 

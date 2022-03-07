@@ -5,6 +5,7 @@ import { DockerImagesService } from 'src/docker-images/docker-images.service';
 import { DockerVolumesService } from 'src/docker-volumes/docker-volumes.service';
 import { DockerNetworksService } from 'src/docker-networks/docker-networks.service';
 import { DockerHostsService } from 'src/docker-hosts/docker-hosts.service';
+import 'dotenv/config';
 export declare class DockerService {
     private readonly http;
     private readonly containersService;

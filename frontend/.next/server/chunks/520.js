@@ -3,31 +3,6 @@ exports.id = 520;
 exports.ids = [520];
 exports.modules = {
 
-/***/ 2670:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "$": () => (/* binding */ Spinner)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var primereact_progressspinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5767);
-/* harmony import */ var primereact_progressspinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(primereact_progressspinner__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-function Spinner() {
-    return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-            className: "col-12 text-center",
-            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_progressspinner__WEBPACK_IMPORTED_MODULE_1__.ProgressSpinner, {})
-        })
-    }));
-}
-
-
-/***/ }),
-
 /***/ 520:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -1688,7 +1663,7 @@ function MainDashboardHostSummary(props) {
                     var ref, ref8, ref9, ref10, ref11, ref12, ref13;
                     newStats.memInUse += ((ref = c.statsSummary) === null || ref === void 0 ? void 0 : ref.memoryUsage) || 0;
                     newStats.cpuUsage += ((ref8 = c.statsSummary) === null || ref8 === void 0 ? void 0 : ref8.cpuUsage) || 0;
-                    newStats.diskRead += ((ref9 = c.statsSummary) === null || ref9 === void 0 ? void 0 : ref9.diskread) || 0;
+                    newStats.diskRead += ((ref9 = c.statsSummary) === null || ref9 === void 0 ? void 0 : ref9.diskRead) || 0;
                     newStats.diskWrite += ((ref10 = c.statsSummary) === null || ref10 === void 0 ? void 0 : ref10.diskWrite) || 0;
                     newStats.networkIn += ((ref11 = c.statsSummary) === null || ref11 === void 0 ? void 0 : ref11.networkRx) || 0;
                     newStats.networkOut += ((ref12 = c.statsSummary) === null || ref12 === void 0 ? void 0 : ref12.networkTx) || 0;

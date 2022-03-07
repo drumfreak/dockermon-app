@@ -154,7 +154,13 @@ function ImagesIndex(props) {
         c1 = images[currentHostRef.current.id].images;
         const data = Object.keys(c1).map((key)=>c1[key]
         );
-        setItems(data);
+        const d = data.sort((a, b)=>{
+            if (!a.name) {
+                a.name = 'Unknown';
+            }
+            return a.name.localeCompare(b.name);
+        });
+        setItems(d);
         setIsLoading(false);
     }
     async function loadSocket() {
@@ -407,166 +413,171 @@ function ImagesIndex(props) {
         });
         setSelectedRows(null);
     };
-    return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "col-12 p-0 mt-2 pr-1 grid",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "col-6",
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
+    return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "col-12 p-0 m-0",
+        children: [
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "col-12 p-0 m-0 pr-1 grid",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "col-6",
+                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_12__.FontAwesomeIcon, {
+                                    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_15__.faHardDrive,
+                                    pull: "left",
+                                    className: "fa-1x lightblue-color mt-0 pt-0",
+                                    swapOpacity: true
+                                }),
+                                "Docker Images"
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "col-6 text-right pr-0",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
+                                className: "p-input-icon-left mr-3",
                                 children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_12__.FontAwesomeIcon, {
-                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_15__.faHardDrive,
-                                        pull: "left",
-                                        className: "fa-1x lightblue-color mt-0 pt-0",
-                                        swapOpacity: true
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                                        className: "pi pi-search"
                                     }),
-                                    "Docker Images"
-                                ]
-                            })
-                        }),
-                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                            className: "col-6 text-right pr-0",
-                            children: [
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                                    className: "p-input-icon-left mr-3",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
-                                            className: "pi pi-search"
-                                        }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_14__.InputText, {
-                                            value: globalFilterValue1,
-                                            onChange: onGlobalFilterChange1,
-                                            placeholder: "Keyword Search"
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
-                                    label: "Image",
-                                    className: "p-button-secondary mr-2",
-                                    icon: "fa fa-plus",
-                                    onClick: ()=>router.push('/images/create')
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
-                                    className: "p-button p-component p-button-secondary mt-1 p-2",
-                                    label: "",
-                                    onClick: ()=>loadData()
-                                    ,
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_12__.FontAwesomeIcon, {
-                                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_15__.faArrowRotateRight,
-                                        className: "mt-0 p-1",
-                                        swapOpacity: true
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_inputtext__WEBPACK_IMPORTED_MODULE_14__.InputText, {
+                                        value: globalFilterValue1,
+                                        onChange: onGlobalFilterChange1,
+                                        placeholder: "Keyword Search"
                                     })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                                label: "Image",
+                                className: "p-button-secondary mr-2",
+                                icon: "fa fa-plus",
+                                onClick: ()=>router.push('/images/create')
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                className: "p-button p-component p-button-secondary mt-1 p-2",
+                                label: "",
+                                onClick: ()=>loadData()
+                                ,
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_12__.FontAwesomeIcon, {
+                                    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_15__.faArrowRotateRight,
+                                    className: "mt-0 p-1",
+                                    swapOpacity: true
                                 })
-                            ]
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                    children: [
-                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_datatable__WEBPACK_IMPORTED_MODULE_4__.DataTable, {
-                            value: items,
-                            stripedRows: true,
-                            rowHover: true,
-                            showGridlines: true,
-                            selection: selectedRows,
-                            onSelectionChange: (e)=>selectRows(e)
-                            ,
-                            paginator: true,
-                            rows: 15,
-                            totalRecords: items === null || items === void 0 ? void 0 : items.length,
-                            dataKey: "id",
-                            rowsPerPageOptions: [
-                                10,
-                                15,
-                                20,
-                                50,
-                                100,
-                                200
-                            ],
-                            sortMode: "single",
-                            responsiveLayout: "scroll",
-                            sortField: "name",
-                            sortOrder: 1,
-                            filters: filters1,
-                            filterDisplay: "menu",
-                            loading: isLoadingRef.current,
-                            // loading={loading1}
-                            // responsiveLayout="scroll"
-                            globalFilterFields: [
-                                'name',
-                                'imageId',
-                                'tag'
-                            ],
-                            children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    sortable: true,
-                                    field: "name",
-                                    header: "Name",
-                                    filter: true,
-                                    filterPlaceholder: "Search by name",
-                                    body: nameTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    sortable: true,
-                                    field: "tag",
-                                    header: "Tag",
-                                    filter: true,
-                                    filterPlaceholder: "Search by Tag",
-                                    body: tagTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    sortable: true,
-                                    field: "fileSize",
-                                    header: "Size",
-                                    align: "center",
-                                    body: sizeTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    sortable: true,
-                                    field: "dockerVersion",
-                                    header: "Docker Version",
-                                    filter: true,
-                                    filterPlaceholder: "Search by Docker Version",
-                                    align: "center",
-                                    body: versionTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    sortable: true,
-                                    field: "status",
-                                    header: "Status",
-                                    align: "center",
-                                    body: statusTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    field: "id",
-                                    header: "Actions",
-                                    align: "center",
-                                    body: actionTemplate
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-                                    selectionMode: "multiple",
-                                    headerStyle: {
-                                        width: '3em'
-                                    }
-                                })
-                            ]
-                        }),
-                        (selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.length) > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "col-12 text-right pr-2",
-                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
-                                className: "mt-2 p-button-warning",
-                                label: "Remove Selected",
-                                icon: "fa fa-trash",
-                                onClick: (e)=>confirm('removeSelected', null, 'Remove Selected Images?', e)
                             })
+                        ]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_datatable__WEBPACK_IMPORTED_MODULE_4__.DataTable, {
+                        value: items,
+                        stripedRows: true,
+                        rowHover: true,
+                        showGridlines: true,
+                        selection: selectedRows,
+                        onSelectionChange: (e)=>selectRows(e)
+                        ,
+                        paginator: true,
+                        rows: 15,
+                        totalRecords: items === null || items === void 0 ? void 0 : items.length,
+                        dataKey: "id",
+                        rowsPerPageOptions: [
+                            10,
+                            15,
+                            20,
+                            50,
+                            100,
+                            200
+                        ],
+                        sortMode: "single",
+                        responsiveLayout: "scroll",
+                        sortField: "name",
+                        sortOrder: 1,
+                        filters: filters1,
+                        filterDisplay: "menu",
+                        loading: isLoadingRef.current,
+                        // loading={loading1}
+                        // responsiveLayout="scroll"
+                        globalFilterFields: [
+                            'name',
+                            'imageId',
+                            'tag'
+                        ],
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "name",
+                                header: "Name",
+                                filter: true,
+                                filterPlaceholder: "Search by name",
+                                body: nameTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "tag",
+                                header: "Tag",
+                                filter: true,
+                                filterPlaceholder: "Search by Tag",
+                                body: tagTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "fileSize",
+                                header: "Size",
+                                align: "center",
+                                body: sizeTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "dockerVersion",
+                                header: "Docker Version",
+                                filter: true,
+                                filterPlaceholder: "Search by Docker Version",
+                                align: "center",
+                                body: versionTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "status",
+                                header: "Status",
+                                align: "center",
+                                body: statusTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                sortable: true,
+                                field: "containers.length",
+                                header: "Containers",
+                                align: "center"
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                field: "id",
+                                header: "Actions",
+                                align: "center",
+                                body: actionTemplate
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
+                                selectionMode: "multiple",
+                                headerStyle: {
+                                    width: '3em'
+                                }
+                            })
+                        ]
+                    }),
+                    (selectedRows === null || selectedRows === void 0 ? void 0 : selectedRows.length) > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "col-12 text-right pr-2",
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_10__.Button, {
+                            className: "mt-2 p-button-warning",
+                            label: "Remove Selected",
+                            icon: "fa fa-trash",
+                            onClick: (e)=>confirm('removeSelected', null, 'Remove Selected Images?', e)
                         })
-                    ]
-                })
-            ]
-        })
+                    })
+                ]
+            })
+        ]
     }));
 };
 

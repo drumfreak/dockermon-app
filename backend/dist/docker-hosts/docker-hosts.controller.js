@@ -58,7 +58,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DockerHostsController.prototype, "getHost", null);
 DockerHostsController = __decorate([
-    (0, common_1.Controller)('api/v1/docker/hosts'),
+    (0, common_1.Controller)('api/v1/hosts'),
     __metadata("design:paramtypes", [docker_hosts_service_1.DockerHostsService])
 ], DockerHostsController);
 exports.DockerHostsController = DockerHostsController;
