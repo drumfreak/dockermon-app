@@ -1,5 +1,5 @@
 #! /bin/sh
-npm cache clean --force
+
 if [ ! -f "/var/log/dockermon.log" ] 
 then
     ln -s /dev/stdin /var/log/dockermon.log
@@ -7,16 +7,16 @@ fi
 
 if [ -d "/root/.npm" ] 
 then
+    npm cache clean --force
     rm -rf /root/.npm
 fi
 
 /etc/init.d/redis-server start &
 
-/usr/local/bin/docker-entrypoint.sh --initialize-insecure=false --default-authentication-plugin=mysql_native_password > /var/log/dockermon.log &
-echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
-
 if [ ! -f "/app/initialrun.txt" ]
 then
+    /usr/local/bin/docker-entrypoint.sh --initialize-insecure=false --default-authentication-plugin=mysql_native_password > /var/log/dockermon.log &
+    echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
     sleep 30
 fi
 

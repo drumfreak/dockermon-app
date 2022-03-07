@@ -100,7 +100,7 @@ function HostsForm(props) {
     const activeRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(active);
     activeRef.current = active;
     const { 0: windowsHost , 1: setWindowsHost  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-    const windowsHostRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(windowsHostRef);
+    const windowsHostRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(windowsHost);
     windowsHostRef.current = windowsHost;
     const { 0: protectedHost , 1: setProtectedHost  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
     const protectedHostRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(protectedHost);
