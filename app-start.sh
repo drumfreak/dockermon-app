@@ -12,12 +12,13 @@ then
 fi
 
 /etc/init.d/redis-server start &
+/usr/local/bin/docker-entrypoint.sh --initialize-insecure=false --default-authentication-plugin=mysql_native_password > /var/log/dockermon.log &
+echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
+  
 
 if [ ! -f "/app/initialrun.txt" ]
 then
-    /usr/local/bin/docker-entrypoint.sh --initialize-insecure=false --default-authentication-plugin=mysql_native_password > /var/log/dockermon.log &
-    echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
-    sleep 30
+  sleep 30
 fi
 
 if [ -f "/app/initialrun.txt" ]
