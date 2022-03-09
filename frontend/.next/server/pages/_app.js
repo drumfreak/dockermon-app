@@ -36,7 +36,7 @@ function Footer() {
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
                                     className: "pi pi-chart-bar mr-2"
                                 }),
-                                "Dockermon v 0.1"
+                                "Dockermon v0.1.11"
                             ]
                         })
                     }),
